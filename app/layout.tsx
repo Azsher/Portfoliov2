@@ -24,6 +24,12 @@ export const metadata = {
   description: 'Professional engineering portfolio of Oscar Antayhua, specialized in Next.js/React, n8n, FastAPI, Python and server operations.',
 };
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover' as const,
+};
+
 export default function RootLayout({
   children,
 }: {

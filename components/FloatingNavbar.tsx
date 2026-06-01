@@ -57,7 +57,7 @@ export default function FloatingNavbar({
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full z-[100] p-4 md:p-6 pointer-events-none flex justify-center">
+    <div className="fixed top-0 left-0 w-full z-[100] p-4 md:p-6 pt-[max(1rem,env(safe-area-inset-top))] md:pt-[max(1.5rem,env(safe-area-inset-top))] pointer-events-none flex justify-center">
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
