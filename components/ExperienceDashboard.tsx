@@ -168,7 +168,7 @@ export default function ExperienceDashboard({ language }: ExperienceDashboardPro
     }
   ];
 
-  const currentExp = experiences[activeTab];
+  const currentExp = experiences[activeTab] || experiences[0];
 
   // Helper to render responsive graphic schema based on experience sector
   const renderSchemaDiagram = (type: 'analytics' | 'workflow' | 'generative') => {
@@ -333,14 +333,13 @@ export default function ExperienceDashboard({ language }: ExperienceDashboardPro
         <div className="text-xs font-mono text-neutral-550 dark:text-white/40 uppercase tracking-[0.2em] font-black mb-1.5 px-1">
           {t.tabHeader}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2.5">
+        <div className="flex flex-col gap-2.5">
           {experiences.map((exp, idx) => {
             const isActive = activeTab === idx;
             return (
-              <button
+              <div
                 key={`${exp.company}-${idx}`}
-                onClick={() => setActiveTab(idx)}
-                className={`w-full text-left p-5 rounded-xl border transition-all text-sm font-mono tracking-tight cursor-pointer relative group flex flex-col gap-1.5 overflow-hidden active:scale-99 ${isActive
+                className={`w-full rounded-xl border transition-all text-sm font-mono tracking-tight relative overflow-hidden ${isActive
                     ? 'bg-white dark:bg-[#161616] border-neutral-900 dark:border-white/30 shadow-xl dark:shadow-[0_8px_25px_rgba(0,0,0,0.5)] text-neutral-900 dark:text-white'
                     : 'bg-white/40 dark:bg-[#0e0e0e]/50 border-neutral-200/70 dark:border-white/10 hover:border-neutral-350 dark:hover:border-white/20 text-neutral-550 dark:text-white/60 hover:text-neutral-900 dark:hover:text-white'
                   }`}
@@ -351,71 +350,165 @@ export default function ExperienceDashboard({ language }: ExperienceDashboardPro
                     }`}
                 />
 
-                <div className="flex items-center justify-between w-full relative z-10 pl-1">
-                  <span className="text-[10px] text-neutral-400 dark:text-white/35 tracking-widest font-black uppercase">
-                    0{idx + 1} // {exp.shortLabel}
-                  </span>
-                  <span className={`text-xs font-mono font-bold ${isActive ? 'text-indigo-600 dark:text-teal-400' : 'text-neutral-600 dark:text-white/50'
+                <button
+                  onClick={() => {
+                    setActiveTab(prev => {
+                      if (prev === idx) {
+                        const isMobileViewport = window.innerWidth < 1024;
+                        return isMobileViewport ? -1 : idx;
+                      }
+                      return idx;
+                    });
+                  }}
+                  className="w-full text-left p-5 cursor-pointer relative group flex flex-col gap-1.5 active:scale-99 focus:outline-hidden"
+                >
+                  <div className="flex items-center justify-between w-full relative z-10 pl-1">
+                    <span className="text-[10px] text-neutral-400 dark:text-white/35 tracking-widest font-black uppercase">
+                      0{idx + 1} // {exp.shortLabel}
+                    </span>
+                    <span className={`text-xs font-mono font-bold ${isActive ? 'text-indigo-600 dark:text-teal-400' : 'text-neutral-600 dark:text-white/50'
+                      }`}>
+                      {exp.period.split(' — ')[0]}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-3 relative z-10 pl-1 w-full mt-0.5">
+                    {/* Company Logo with border radius matching portfolio theme */}
+                    <div className={`w-12 h-12 rounded-xl flex-shrink-0 border flex items-center justify-center overflow-hidden shadow-xs group-hover:border-neutral-350 dark:group-hover:border-white/20 transition-all relative ${
+                      exp.company === 'Entel Perú'
+                        ? 'bg-white border-neutral-200 p-1.5'
+                        : 'bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-[#111] dark:to-[#080808] border-neutral-200 dark:border-white/10'
                     }`}>
-                    {exp.period.split(' — ')[0]}
-                  </span>
-                </div>
+                      {exp.logo ? (
+                        <img
+                          src={exp.logo}
+                          alt={exp.company}
+                          className={`w-full h-full transition-transform duration-300 group-hover:scale-105 ${
+                            exp.company === 'Entel Perú' ? 'object-contain' : 'object-cover'
+                          }`}
+                          onError={(e) => {
+                            const target = e.currentTarget as HTMLImageElement;
+                            target.style.display = 'none';
+                            const fallback = target.nextElementSibling as HTMLElement;
+                            if (fallback) fallback.style.display = 'flex';
+                          }}
+                        />
+                      ) : null}
 
-                <div className="flex items-center gap-3 relative z-10 pl-1 w-full mt-0.5">
-                  {/* Company Logo with border radius matching portfolio theme */}
-                  <div className={`w-12 h-12 rounded-xl flex-shrink-0 border flex items-center justify-center overflow-hidden shadow-xs group-hover:border-neutral-350 dark:group-hover:border-white/20 transition-all relative ${
-                    exp.company === 'Entel Perú'
-                      ? 'bg-white border-neutral-200 p-1.5'
-                      : 'bg-gradient-to-br from-neutral-50 to-neutral-100 dark:from-[#111] dark:to-[#080808] border-neutral-200 dark:border-white/10'
-                  }`}>
-                    {exp.logo ? (
-                      <img
-                        src={exp.logo}
-                        alt={exp.company}
-                        className={`w-full h-full transition-transform duration-300 group-hover:scale-105 ${
-                          exp.company === 'Entel Perú' ? 'object-contain' : 'object-cover'
-                        }`}
-                        onError={(e) => {
-                          const target = e.currentTarget as HTMLImageElement;
-                          target.style.display = 'none';
-                          const fallback = target.nextElementSibling as HTMLElement;
-                          if (fallback) fallback.style.display = 'flex';
-                        }}
-                      />
-                    ) : null}
+                      {/* Fallback Monogram */}
+                      <div
+                        className="absolute inset-0 flex items-center justify-center font-sans font-black text-xs text-neutral-800 dark:text-neutral-200"
+                        style={{ display: exp.logo ? 'none' : 'flex' }}
+                      >
+                        {exp.company === 'Entel Perú' ? (
+                          <span className="text-blue-650 dark:text-blue-400">E</span>
+                        ) : exp.company === 'Nova Academy' ? (
+                          <span className="text-orange-500 dark:text-orange-400">N</span>
+                        ) : (
+                          <span>{exp.company.charAt(0)}</span>
+                        )}
+                      </div>
+                    </div>
 
-                    {/* Fallback Monogram */}
-                    <div
-                      className="absolute inset-0 flex items-center justify-center font-sans font-black text-xs text-neutral-800 dark:text-neutral-200"
-                      style={{ display: exp.logo ? 'none' : 'flex' }}
-                    >
-                      {exp.company === 'Entel Perú' ? (
-                        <span className="text-blue-650 dark:text-blue-400">E</span>
-                      ) : exp.company === 'Nova Academy' ? (
-                        <span className="text-orange-500 dark:text-orange-400">N</span>
-                      ) : (
-                        <span>{exp.company.charAt(0)}</span>
-                      )}
+                    <div className="text-left flex-1 min-w-0 space-y-0.5">
+                      <span className="font-extrabold tracking-tight text-sm lg:text-[14px] font-sans block text-neutral-900 dark:text-white group-hover:translate-x-0.5 transition-transform leading-tight truncate">
+                        {exp.role[language]}
+                      </span>
+                      <span className="text-xs font-sans text-neutral-500 dark:text-white/45 block font-medium group-hover:translate-x-0.5 transition-transform delay-75 truncate">
+                        {exp.company}
+                      </span>
                     </div>
                   </div>
+                </button>
 
-                  <div className="text-left flex-1 min-w-0 space-y-0.5">
-                    <span className="font-extrabold tracking-tight text-sm lg:text-[14px] font-sans block text-neutral-900 dark:text-white group-hover:translate-x-0.5 transition-transform leading-tight truncate">
-                      {exp.role[language]}
-                    </span>
-                    <span className="text-xs font-sans text-neutral-500 dark:text-white/45 block font-medium group-hover:translate-x-0.5 transition-transform delay-75 truncate">
-                      {exp.company}
-                    </span>
-                  </div>
-                </div>
-              </button>
+                {/* Mobile inline accordion details */}
+                <AnimatePresence initial={false}>
+                  {isActive && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      className="block lg:hidden overflow-hidden"
+                    >
+                      <div className="px-5 pb-10 pt-2 border-t border-neutral-200/50 dark:border-white/10 space-y-5">
+                        {/* Description */}
+                        <p className="text-xs md:text-sm text-neutral-600 dark:text-white/75 leading-relaxed font-sans mt-3">
+                          {exp.desc[language]}
+                        </p>
+
+                        {/* Achievements */}
+                        <div className="space-y-2.5">
+                          <span className="text-[9px] font-mono text-neutral-400 dark:text-white/40 uppercase tracking-widest font-black block">
+                            {t.achievementsTitle}
+                          </span>
+                          {exp.achievements[language].map((ach, achIdx) => (
+                            <div key={achIdx} className="flex items-start gap-2 text-xs text-neutral-600 dark:text-white/85 font-sans leading-relaxed">
+                              <CheckCircle2 className="w-4 h-4 text-emerald-500/80 shrink-0 mt-0.5" />
+                              <span>{ach}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Realtime Grid */}
+                        <div className="space-y-2">
+                          <span className="text-[9px] font-mono text-neutral-400 dark:text-white/40 uppercase tracking-widest font-black block">
+                            REALTIME_GRID
+                          </span>
+                          {renderSchemaDiagram(exp.diagramType)}
+                        </div>
+
+                        {/* Impact Metrics */}
+                        <div className="space-y-2">
+                          <span className="text-[9px] font-mono text-neutral-400 dark:text-white/40 uppercase tracking-widest font-black block">
+                            {t.metricsTitle}
+                          </span>
+                          <div className="grid grid-cols-3 gap-2">
+                            {exp.metrics.map((met, metIdx) => (
+                              <div key={metIdx} className="p-3 border border-neutral-200 dark:border-white/5 rounded-xl bg-neutral-50 dark:bg-black/30 flex flex-col justify-center items-center text-center shadow-xs">
+                                <div className="flex items-center gap-1 mb-0.5">
+                                  {met.icon}
+                                  <span className="text-sm font-black font-sans text-neutral-900 dark:text-white tracking-tight">
+                                    {met.value}
+                                  </span>
+                                </div>
+                                <span className="text-[8px] font-mono text-neutral-550 dark:text-white/45 uppercase leading-none block font-bold">
+                                  {met.label[language]}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Tech Stack */}
+                        <div className="space-y-2">
+                          <span className="text-[9px] font-mono text-neutral-400 dark:text-white/40 uppercase tracking-widest font-black block flex items-center gap-1.5">
+                            <Code className="w-3.5 h-3.5" />
+                            {t.techTitle}
+                          </span>
+                          <div className="flex flex-wrap gap-1.5">
+                            {exp.techStack.map((tech) => (
+                              <span
+                                key={tech}
+                                className="px-2.5 py-1 text-[9px] font-semibold font-mono bg-neutral-100 dark:bg-white/5 border border-neutral-200 dark:border-white/10 rounded-md text-neutral-700 dark:text-white/80"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             );
           })}
         </div>
       </div>
 
       {/* 2. Detailed selected experience view panel with custom page sliding transitions */}
-      <div className="lg:col-span-8 w-full">
+      <div className="lg:col-span-8 w-full hidden lg:block">
         <div className="text-xs font-mono text-neutral-400 dark:text-white/30 uppercase tracking-[0.2em] font-black mb-1 px-1 flex items-center justify-between">
           <span>{t.roleHeader}</span>
           <span className="text-emerald-500 flex items-center gap-1 text-[11px]">

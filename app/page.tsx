@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import dynamic from 'next/dynamic';
+import { motion, AnimatePresence, MotionConfig } from 'motion/react';
 import {
   Shield,
   Clock,
@@ -24,66 +25,27 @@ import {
   ArrowUpRight,
   Cpu
 } from 'lucide-react';
-import ThreeTunnel from '@/components/ThreeTunnel';
-import MatterSandbox from '@/components/MatterSandbox';
+import HeroRoleTypewriter from '@/components/HeroRoleTypewriter';
 import StackedProjects from '@/components/StackedProjects';
 import FloatingNavbar from '@/components/FloatingNavbar';
 import ExperienceDashboard from '@/components/ExperienceDashboard';
 import PageLoader from '@/components/PageLoader';
 import { useMobile } from '@/hooks/use-mobile';
 
+const ThreeTunnel = dynamic(() => import('@/components/ThreeTunnel'), { ssr: false });
+const MatterSandbox = dynamic(() => import('@/components/MatterSandbox'), { ssr: false });
+
 export default function Page() {
   const isMobile = useMobile();
   const [isLoading, setIsLoading] = useState(true);
   const [language, setLanguage] = useState<'es' | 'en'>('es');
   const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
-  const [livePing, setLivePing] = useState<number>(14);
-  const [liveUptime, setLiveUptime] = useState<string>('00:00:00:00');
   const [contactName, setContactName] = useState('');
   const [contactEmail, setContactEmail] = useState('');
   const [contactMsg, setContactMsg] = useState('');
   const [isTransmitting, setIsTransmitting] = useState(false);
   const [transmissionSuccess, setTransmissionSuccess] = useState(false);
   const [cvDownloaded, setCvDownloaded] = useState(false);
-  const [typedRole, setTypedRole] = useState('');
-
-  // Typewriter effect for developer titles
-  useEffect(() => {
-    const roles = language === 'es'
-      ? ['Full Stack Engineer', 'Arquitecto de Automatizaciones', 'Líder Técnico de IA']
-      : ['Senior Full Stack Developer', 'Automation Architect', 'Systems & AI Tech Lead'];
-    let roleIdx = 0;
-    let charIdx = 0;
-    let isDeleting = false;
-    let timer: NodeJS.Timeout;
-
-    const tick = () => {
-      const currentRole = roles[roleIdx];
-      if (!isDeleting) {
-        setTypedRole(currentRole.substring(0, charIdx + 1));
-        charIdx++;
-        if (charIdx === currentRole.length) {
-          isDeleting = true;
-          timer = setTimeout(tick, 2200);
-        } else {
-          timer = setTimeout(tick, 60);
-        }
-      } else {
-        setTypedRole(currentRole.substring(0, charIdx - 1));
-        charIdx--;
-        if (charIdx === 0) {
-          isDeleting = false;
-          roleIdx = (roleIdx + 1) % roles.length;
-          timer = setTimeout(tick, 400);
-        } else {
-          timer = setTimeout(tick, 30);
-        }
-      }
-    };
-
-    timer = setTimeout(tick, 400);
-    return () => clearTimeout(timer);
-  }, [language]);
 
   // Load initial theme preference from localStorage or system scheme
   useEffect(() => {
@@ -107,31 +69,8 @@ export default function Page() {
     }
   }, [isDarkMode]);
 
-  // Dynamic Telemetry Loops
-  useEffect(() => {
-    // Ping loop
-    const pingInterval = setInterval(() => {
-      setLivePing(Math.floor(12 + Math.random() * 5));
-    }, 4500);
 
-    // Uptime ticker based on actual starting time
-    const startTime = Date.now() - 345600 * 1000 - 45000 * 1000; // 4 days + offset
-    const uptimeInterval = setInterval(() => {
-      const diff = Date.now() - startTime;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const mins = Math.floor((diff / (1000 * 60)) % 60);
-      const secs = Math.floor((diff / 1000) % 60);
 
-      const pad = (num: number) => num.toString().padStart(2, '0');
-      setLiveUptime(`${pad(days)}d ${pad(hours)}h ${pad(mins)}m ${pad(secs)}s`);
-    }, 1000);
-
-    return () => {
-      clearInterval(pingInterval);
-      clearInterval(uptimeInterval);
-    };
-  }, []);
 
   const languageDict = {
     es: {
@@ -256,59 +195,64 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col relative bg-neutral-100 dark:bg-[#0b0b0b] geometric-grid selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-black overflow-clip">
-      {/* 3D Cosmic Wireframe Grid Highway (Three.js Background) */}
-      {!isMobile && (
-        <div className="absolute inset-0 h-full w-full pointer-events-none opacity-30 mix-blend-screen dark:mix-blend-screen overflow-hidden">
-          <ThreeTunnel isDark={isDarkMode} />
-        </div>
-      )}
-
-      <div className="absolute inset-0 bg-radial-gradient from-transparent via-white/80 dark:via-[#010101]/80 to-neutral-100 dark:to-[#0a0a0a] pointer-events-none z-0" />
-
-      {/* Subtle Ambient Glow Orbs - Violet/Indigo and Green/Teal details */}
-      <div className="absolute top-[20%] left-[8%] w-[45rem] h-[45rem] rounded-full bg-indigo-500/[0.04] dark:bg-indigo-500/[0.035] blur-[150px] pointer-events-none z-0" />
-      <div className="absolute top-[65%] right-[5%] w-[48rem] h-[48rem] rounded-full bg-teal-500/[0.035] dark:bg-teal-500/[0.03] blur-[160px] pointer-events-none z-0" />
-      <div className="absolute top-[120%] left-[12%] w-[40rem] h-[40rem] rounded-full bg-purple-500/[0.03] dark:bg-purple-500/[0.025] blur-[140px] pointer-events-none z-0" />
-      <div className="absolute top-[180%] right-[10%] w-[45rem] h-[45rem] rounded-full bg-indigo-500/[0.025] dark:bg-indigo-500/[0.02] blur-[150px] pointer-events-none z-0" />
-
-      {/* Floating Sileo-Style toast notifications */}
-      <div className="fixed top-20 right-6 z-50 pointer-events-none space-y-2">
-        <AnimatePresence>
-          {cvDownloaded && (
-            <motion.div
-              initial={{ opacity: 0, x: 50, scale: 0.9 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 50, scale: 0.9 }}
-              transition={{ duration: 0.4, ease: 'easeOut' }}
-              className="pointer-events-auto p-4 rounded-xl border border-neutral-300 dark:border-white/10 bg-white/95 dark:bg-black/95 shadow-xl flex items-center gap-3 max-w-sm backdrop-blur-md"
-            >
-              <div className="h-8 w-8 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-500/20">
-                <CheckCircle2 className="h-4 w-4" />
+    <MotionConfig reducedMotion="never">
+      <div className={`min-h-screen flex flex-col relative bg-neutral-100 dark:bg-[#0b0b0b] geometric-grid selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-black overflow-clip ${isMobile ? 'perf-mobile' : ''}`}>
+        {!isLoading && (
+          <>
+            {/* 3D Cosmic Wireframe Grid Highway (Three.js Background) */}
+            {!isMobile && (
+              <div className="absolute inset-0 h-full w-full pointer-events-none opacity-30 mix-blend-screen dark:mix-blend-screen overflow-hidden">
+                <ThreeTunnel isDark={isDarkMode} />
               </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-xs font-black font-mono tracking-wider text-neutral-950 dark:text-white uppercase">
-                  {language === 'es' ? 'DESCARGA COMPLETADA' : 'CV DOWNLOAD COMPLETED'}
-                </div>
-                <p className="text-[10px] font-sans text-neutral-500 dark:text-white/60 leading-tight">
-                  {language === 'es' ? 'La transmisión del currículum vitae se ha completado.' : 'Document payload routed to your system.'}
-                </p>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+            )}
 
-      {/* Capsule-style Floating Navbar */}
-      <FloatingNavbar
-        language={language}
-        setLanguage={setLanguage}
-        isDarkMode={isDarkMode}
-        setIsDarkMode={setIsDarkMode}
-      />
+            <>
+              <div className="absolute inset-0 bg-radial-gradient from-transparent via-white/80 dark:via-[#010101]/80 to-neutral-100 dark:to-[#0a0a0a] pointer-events-none z-0" />
 
-      {/* LANDING CONTENT WRAPPER */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-6 md:px-12 py-12 flex flex-col gap-24 relative z-10">
+              {/* Subtle Ambient Glow Orbs - Violet/Indigo and Green/Teal details */}
+              <div className="absolute top-[20%] left-[8%] w-[45rem] h-[45rem] rounded-full bg-indigo-500/[0.04] dark:bg-indigo-500/[0.035] blur-[150px] pointer-events-none z-0" />
+              <div className="absolute top-[65%] right-[5%] w-[48rem] h-[48rem] rounded-full bg-teal-500/[0.035] dark:bg-teal-500/[0.03] blur-[160px] pointer-events-none z-0" />
+              <div className="absolute top-[120%] left-[12%] w-[40rem] h-[40rem] rounded-full bg-purple-500/[0.03] dark:bg-purple-500/[0.025] blur-[140px] pointer-events-none z-0" />
+              <div className="absolute top-[180%] right-[10%] w-[45rem] h-[45rem] rounded-full bg-indigo-500/[0.025] dark:bg-indigo-500/[0.02] blur-[150px] pointer-events-none z-0" />
+            </>
+
+          {/* Floating Sileo-Style toast notifications */}
+          <div className="fixed top-20 right-6 z-50 pointer-events-none space-y-2">
+            <AnimatePresence>
+              {cvDownloaded && (
+                <motion.div
+                  initial={{ opacity: 0, x: 50, scale: 0.9 }}
+                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                  exit={{ opacity: 0, x: 50, scale: 0.9 }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
+                  className="pointer-events-auto p-4 rounded-xl border border-neutral-300 dark:border-white/10 bg-white/95 dark:bg-black/95 shadow-xl flex items-center gap-3 max-w-sm backdrop-blur-md"
+                >
+                  <div className="h-8 w-8 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-500/20">
+                    <CheckCircle2 className="h-4 w-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-black font-mono tracking-wider text-neutral-950 dark:text-white uppercase">
+                      {language === 'es' ? 'DESCARGA COMPLETADA' : 'CV DOWNLOAD COMPLETED'}
+                    </div>
+                    <p className="text-[10px] font-sans text-neutral-500 dark:text-white/60 leading-tight">
+                      {language === 'es' ? 'La transmisión del currículum vitae se ha completado.' : 'Document payload routed to your system.'}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Capsule-style Floating Navbar */}
+          <FloatingNavbar
+            language={language}
+            setLanguage={setLanguage}
+            isDarkMode={isDarkMode}
+            setIsDarkMode={setIsDarkMode}
+          />
+
+          {/* LANDING CONTENT WRAPPER */}
+          <main className="flex-1 max-w-7xl w-full mx-auto px-6 md:px-12 py-12 flex flex-col gap-24 relative z-10">
 
         {/* SECTION 1: SYSTEM INTRO / HERO HEADER BLOCK */}
         <section
@@ -333,7 +277,7 @@ export default function Page() {
             {/* Subtitle Role with Typing indicator */}
             <div className="h-10 flex items-center">
               <p className="text-base md:text-xl lg:text-2xl font-mono tracking-[0.05em] uppercase text-indigo-600 dark:text-indigo-400 m-0 font-bold flex items-center gap-2">
-                <span>{'>'} {typedRole}</span>
+                <HeroRoleTypewriter language={language} />
                 <span className="w-2 h-5 bg-indigo-600 dark:bg-indigo-400 animate-pulse" />
               </p>
             </div>
@@ -536,22 +480,20 @@ export default function Page() {
         </section>
 
         {/* SECTION 2: INTERACTIVE DISCOVERY PLAYGROUND (SANDBOX) */}
-        {!isMobile && (
-          <section className="space-y-6 min-h-[calc(100vh-6rem)] flex flex-col justify-center py-12 scroll-mt-16" id="sandbox-section">
-            <div className="max-w-xl">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-1.5 h-3 rounded bg-gradient-to-b from-indigo-500 to-teal-400" />
-                <span className="text-[10px] font-mono tracking-widest text-neutral-500 dark:text-white/40 uppercase block">
-                  LAB_EQUATIONS / FORCE_MATRICES
-                </span>
-              </div>
-              <h2 className="text-3xl md:text-5xl font-black font-sans tracking-tight text-neutral-900 dark:text-white">
-                {language === 'es' ? 'Stack y Tecnologías' : 'Stack & Technologies'}
-              </h2>
+        <section className="space-y-6 min-h-[calc(100vh-6rem)] flex flex-col justify-center py-12 scroll-mt-16" id="sandbox-section">
+          <div className="max-w-xl">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-1.5 h-3 rounded bg-gradient-to-b from-indigo-500 to-teal-400" />
+              <span className="text-[10px] font-mono tracking-widest text-neutral-500 dark:text-white/40 uppercase block">
+                LAB_EQUATIONS / FORCE_MATRICES
+              </span>
             </div>
-            <MatterSandbox language={language} />
-          </section>
-        )}
+            <h2 className="text-3xl md:text-5xl font-black font-sans tracking-tight text-neutral-900 dark:text-white">
+              {language === 'es' ? 'Stack y Tecnologías' : 'Stack & Technologies'}
+            </h2>
+          </div>
+          <MatterSandbox language={language} />
+        </section>
 
         {/* SECTION 2.5: EXPERIENCIA PROFESIONAL & EMPRESAS */}
         <section id="experience-section" className="space-y-8 min-h-[calc(100vh-6rem)] flex flex-col justify-center py-12 scroll-mt-16 bg-transparent relative">
@@ -690,16 +632,19 @@ export default function Page() {
           <span className="text-neutral-300 dark:text-white/20">© 2026 O_ANTAYHUA_SYSTEMS</span>
         </div>
       </footer>
+        </>
+      )}
 
-      <AnimatePresence>
-        {isLoading && (
-          <PageLoader
-            language={language}
-            isDark={isDarkMode}
-            onComplete={() => setIsLoading(false)}
-          />
-        )}
-      </AnimatePresence>
-    </div>
+        <AnimatePresence>
+          {isLoading && (
+            <PageLoader
+              language={language}
+              isDark={isDarkMode}
+              onComplete={() => setIsLoading(false)}
+            />
+          )}
+        </AnimatePresence>
+      </div>
+    </MotionConfig>
   );
 }

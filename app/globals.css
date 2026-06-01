@@ -109,3 +109,25 @@
   box-shadow: 0 16px 45px 0 rgba(0, 0, 0, 0.65);
 }
 
+@media (max-width: 767px) {
+  .perf-mobile .glassmorphism,
+  .perf-mobile .liquid-glass {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .perf-mobile .backdrop-blur-xs,
+  .perf-mobile .backdrop-blur-md,
+  .perf-mobile .backdrop-blur-xl,
+  .perf-mobile .backdrop-blur-2xl {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .perf-mobile [class*="blur-"],
+  .perf-mobile [class*="blur-\["] {
+    filter: none !important;
+  }
+
+}
+

@@ -95,7 +95,7 @@ export default function StackedProjects({ language, isDark = true }: StackedProj
     },
   }[language];
 
-  const currentProj = projectsList[activeIdx];
+  const currentProj = projectsList[activeIdx] || projectsList[0];
 
   return (
     <div className="w-full relative z-10 my-16" id="projects-section">
@@ -118,10 +118,9 @@ export default function StackedProjects({ language, isDark = true }: StackedProj
           {projectsList.map((proj, idx) => {
             const isActive = idx === activeIdx;
             return (
-              <button
+              <div
                 key={proj.id}
-                onClick={() => setActiveIdx(idx)}
-                className={`w-full text-left p-6 border rounded-xl transition-all duration-350 backdrop-blur-md cursor-pointer flex justify-between items-center group relative overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.015)] ${
+                className={`w-full border rounded-xl transition-all duration-350 backdrop-blur-md relative overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.015)] ${
                   isActive
                     ? 'bg-white/95 dark:bg-[#161616] border-neutral-900 text-neutral-900 dark:border-white/30 dark:text-white ring-1 ring-neutral-900/10 dark:ring-white/20'
                     : 'bg-white/40 dark:bg-[#0e0e0e]/50 border-neutral-300/65 dark:border-white/10 text-neutral-550 dark:text-white/50 hover:border-neutral-400 dark:hover:border-white/20 hover:text-neutral-900 dark:hover:text-white/80'
@@ -130,20 +129,153 @@ export default function StackedProjects({ language, isDark = true }: StackedProj
                 {isActive && (
                   <div className="absolute left-0 top-0 bottom-0 w-[4px] bg-gradient-to-b from-indigo-500 to-teal-400" />
                 )}
-                <div>
-                  <div className="text-xs font-mono text-neutral-400 dark:text-white/40 mb-1 tracking-widest uppercase flex items-center gap-1.5 font-bold">
-                    <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-gradient-to-tr from-indigo-500 to-teal-400 animate-pulse' : 'bg-transparent border border-neutral-400 dark:border-white/40'}`} />
-                    0{idx + 1} {"//"} ID_{proj.id.toUpperCase()}
+                
+                <button
+                  onClick={() => {
+                    setActiveIdx(prev => {
+                      if (prev === idx) {
+                        const isMobileViewport = window.innerWidth < 1024;
+                        return isMobileViewport ? -1 : idx;
+                      }
+                      return idx;
+                    });
+                  }}
+                  className="w-full text-left p-6 cursor-pointer flex justify-between items-center group relative overflow-hidden active:scale-99 focus:outline-hidden"
+                >
+                  <div>
+                    <div className="text-xs font-mono text-neutral-400 dark:text-white/40 mb-1 tracking-widest uppercase flex items-center gap-1.5 font-bold">
+                      <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-gradient-to-tr from-indigo-500 to-teal-400 animate-pulse' : 'bg-transparent border border-neutral-400 dark:border-white/40'}`} />
+                      0{idx + 1} {"//"} ID_{proj.id.toUpperCase()}
+                    </div>
+                    <h3 className="text-lg font-black tracking-wider font-sans text-neutral-900 dark:text-white leading-snug">{proj.title}</h3>
+                    <p className="text-sm font-mono text-neutral-405 dark:text-white/40 truncate max-w-[240px] mt-1.5">{proj.sub}</p>
                   </div>
-                  <h3 className="text-lg font-black tracking-wider font-sans text-neutral-900 dark:text-white leading-snug">{proj.title}</h3>
-                  <p className="text-sm font-mono text-neutral-405 dark:text-white/40 truncate max-w-[280px] mt-1.5">{proj.sub}</p>
-                </div>
-                <div className={`p-3 rounded-lg border flex items-center justify-center transition-all ${
-                  isActive ? 'bg-neutral-900 border-neutral-900 text-white dark:bg-white dark:border-white dark:text-black' : 'border-neutral-200 dark:border-white/10 group-hover:border-neutral-400 dark:group-hover:border-white/30 text-neutral-400 dark:text-white/40 group-hover:text-neutral-900 dark:group-hover:text-white'
-                }`}>
-                  <ArrowUpRight className="h-4.5 w-4.5" />
-                </div>
-              </button>
+                  <div className={`p-3 rounded-lg border flex items-center justify-center transition-all ${
+                    isActive ? 'bg-neutral-900 border-neutral-900 text-white dark:bg-white dark:border-white dark:text-black' : 'border-neutral-200 dark:border-white/10 group-hover:border-neutral-400 dark:group-hover:border-white/30 text-neutral-400 dark:text-white/40 group-hover:text-neutral-900 dark:group-hover:text-white'
+                  }`}>
+                    <ArrowUpRight className="h-4.5 w-4.5" />
+                  </div>
+                </button>
+
+                {/* Mobile inline accordion details */}
+                <AnimatePresence initial={false}>
+                  {isActive && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      className="block lg:hidden overflow-hidden"
+                    >
+                      <div className="px-6 pb-10 pt-2 border-t border-neutral-200/50 dark:border-white/10 space-y-5">
+                        {/* Description */}
+                        <p className="text-xs md:text-sm text-neutral-700 dark:text-white/80 leading-relaxed font-sans mt-3">
+                          {language === 'es' ? proj.descriptionEs : proj.descriptionEn}
+                        </p>
+
+                        {/* Demo Player */}
+                        <div className="relative w-full aspect-video rounded-xl border border-neutral-200/80 dark:border-white/10 bg-neutral-50/90 dark:bg-black/60 overflow-hidden group/player shadow-inner flex flex-col justify-between p-4 my-2">
+                          <div className="absolute inset-0 bg-[radial-gradient(#808080_1px,transparent_1px)] [background-size:16px_16px] opacity-15 dark:opacity-[0.07] pointer-events-none" />
+                          <div className="absolute top-0 left-0 w-full h-[1.5px] bg-indigo-500/35 dark:bg-indigo-400/25 animate-[bounce_8s_infinite] pointer-events-none" />
+
+                          <div className="relative flex justify-between items-center text-[9px] font-mono uppercase tracking-widest text-neutral-450 dark:text-white/40">
+                            <span className="flex items-center gap-1.5 font-bold">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                              STREAM_DEMO: ACTIVE_VIEW_MONITOR
+                            </span>
+                            <span className="font-bold bg-neutral-200 dark:bg-white/10 px-1.5 py-0.5 rounded text-neutral-500 dark:text-white/60">
+                              1080P // DEMO_REF
+                            </span>
+                          </div>
+
+                          <div className="relative flex flex-col items-center justify-center gap-2 my-auto py-2">
+                            <div className="w-10 h-10 shrink-0 aspect-square rounded-full border border-neutral-300 dark:border-white/10 bg-white/90 dark:bg-[#111111]/90 backdrop-blur-md shadow-md flex items-center justify-center text-neutral-800 dark:text-white hover:scale-105 transition-transform duration-300 cursor-pointer">
+                              <svg className="w-3.5 h-3.5 fill-current ml-0.5" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                              </svg>
+                            </div>
+                            <div className="text-center px-4">
+                              <span className="text-[10px] font-mono tracking-wider text-neutral-850 dark:text-white font-bold block">
+                                {t.demoPlaceholder}
+                              </span>
+                              <span className="text-[8px] font-mono text-neutral-455 dark:text-white/40 block mt-0.5">
+                                {t.demoPlaceholderSub}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="relative flex items-center gap-2 text-[8px] font-mono text-neutral-400 dark:text-white/40 border-t border-neutral-200/50 dark:border-white/5 pt-2">
+                            <span>0:00</span>
+                            <div className="flex-1 h-1 rounded bg-neutral-200 dark:bg-white/10 relative overflow-hidden">
+                              <div className="absolute top-0 left-0 h-full w-[35%] bg-gradient-to-r from-indigo-500 to-teal-400" />
+                            </div>
+                            <span>0:45</span>
+                          </div>
+                        </div>
+
+                        {/* Tech Stack */}
+                        <div className="space-y-2">
+                          <span className="text-[9px] font-mono text-neutral-400 dark:text-white/40 block uppercase tracking-widest">
+                            {"//"} {t.tags}
+                          </span>
+                          <div className="flex flex-wrap gap-1.5 text-xs font-mono">
+                            {proj.techs.map((tech) => (
+                              <span
+                                key={tech}
+                                className="px-2.5 py-1 border border-neutral-200/60 dark:border-white/10 bg-neutral-50/50 dark:bg-white/5 text-neutral-700 dark:text-white/80 rounded font-semibold text-[9px]"
+                              >
+                                {tech.toUpperCase()}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Telemetry Metrics */}
+                        <div className="border-t border-dashed border-neutral-200 dark:border-white/10 pt-4 mt-2 space-y-2">
+                          <span className="text-[9px] font-mono text-neutral-400 dark:text-white/40 block uppercase tracking-widest">
+                            {"//"} {t.metrics}
+                          </span>
+                          <div className="grid grid-cols-3 gap-2">
+                            {proj.metrics.map((met) => (
+                              <div
+                                key={met.key}
+                                className="p-3 rounded-xl bg-neutral-50/50 dark:bg-white/5 border border-neutral-200/60 dark:border-white/10 text-left font-mono relative overflow-hidden"
+                              >
+                                <div className="absolute right-2 top-2 text-neutral-350 dark:text-white/20">
+                                  {met.key === 'throughput' || met.key === 'fps' || met.key === 'io' ? (
+                                    <Zap className="h-3 w-3" />
+                                  ) : met.key === 'latency' || met.key === 'sockets' || met.key === 'deadlocks' ? (
+                                    <GitBranch className="h-3 w-3" />
+                                  ) : (
+                                    <Award className="h-3 w-3" />
+                                  )}
+                                </div>
+                                <span className="text-[9px] text-neutral-400 dark:text-white/40 block uppercase tracking-wider mb-0.5 font-bold">
+                                  {language === 'es' ? met.labelEs : met.labelEn}
+                                </span>
+                                <span className="text-sm font-black text-neutral-900 dark:text-white block tracking-tight">
+                                  {met.value}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Watch Demo Link */}
+                        <div className="pt-5 pb-2 border-t border-neutral-200 dark:border-white/10 mt-2 flex justify-end">
+                          <a
+                            href={proj.demoUrl || '#'}
+                            className="inline-flex items-center gap-2 px-4 py-2.5 border border-neutral-900 dark:border-white/15 text-white dark:text-black bg-neutral-900 dark:bg-white hover:bg-transparent dark:hover:bg-transparent hover:text-neutral-900 dark:hover:text-white hover:border-neutral-900 dark:hover:border-white rounded-xl transition-all font-mono text-[9px] tracking-widest uppercase font-bold text-center group/demobtn active:scale-98"
+                          >
+                            <span>{t.demoBtn}</span>
+                            <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover/demobtn:translate-x-0.5 group-hover/demobtn:-translate-y-0.5" />
+                          </a>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             );
           })}
 
@@ -216,7 +348,7 @@ export default function StackedProjects({ language, isDark = true }: StackedProj
 
                   {/* Play circle / prompt overlay */}
                   <div className="relative flex flex-col items-center justify-center gap-2 my-auto py-2">
-                    <div className="w-12 h-12 rounded-full border border-neutral-300 dark:border-white/10 bg-white/90 dark:bg-[#111111]/90 backdrop-blur-md shadow-md flex items-center justify-center text-neutral-800 dark:text-white hover:scale-105 transition-transform duration-300 cursor-pointer hover:border-neutral-400 dark:hover:border-white/20">
+                    <div className="w-12 h-12 shrink-0 aspect-square rounded-full border border-neutral-300 dark:border-white/10 bg-white/90 dark:bg-[#111111]/90 backdrop-blur-md shadow-md flex items-center justify-center text-neutral-800 dark:text-white hover:scale-105 transition-transform duration-300 cursor-pointer hover:border-neutral-400 dark:hover:border-white/20">
                       <svg className="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z" />
                       </svg>
