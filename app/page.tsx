@@ -381,7 +381,7 @@ export default function Page() {
             {/* Resume / Portfolio transmission triggers */}
             <div className="pt-8 border-t border-neutral-200/50 dark:border-white/10 mt-8 flex flex-wrap gap-4">
               <a
-                href="https://linkedin.com"
+                href="https://linkedin.com/in/oscar-antayhua"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-2.5 bg-white/70 dark:bg-[#111111]/70 hover:bg-neutral-200 dark:hover:bg-neutral-900 border border-neutral-300/60 dark:border-white/10 rounded-lg text-neutral-800 dark:text-white font-mono text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all active:scale-98"
@@ -392,7 +392,7 @@ export default function Page() {
                 {t.aboutLinkIn}
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/Azsher"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-2.5 bg-white/70 dark:bg-[#111111]/70 hover:bg-neutral-200 dark:hover:bg-neutral-900 border border-neutral-300/60 dark:border-white/10 rounded-lg text-neutral-800 dark:text-white font-mono text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-all active:scale-98"
@@ -621,11 +621,11 @@ export default function Page() {
         </div>
 
         <div className="flex gap-4 font-mono text-[9px] text-neutral-400 dark:text-white/30 uppercase tracking-wider">
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-neutral-900 dark:hover:text-white flex items-center gap-1">
+          <a href="https://github.com/Azsher" target="_blank" rel="noopener noreferrer" className="hover:text-neutral-900 dark:hover:text-white flex items-center gap-1">
             <Terminal className="h-3.5 w-3.5" /> GitHub <ExternalLink className="h-2 w-2" />
           </a>
           <span>/</span>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-neutral-900 dark:hover:text-white flex items-center gap-1">
+          <a href="https://linkedin.com/in/oscar-antayhua" target="_blank" rel="noopener noreferrer" className="hover:text-neutral-900 dark:hover:text-white flex items-center gap-1">
             <User className="h-3.5 w-3.5" /> LinkedIn <ExternalLink className="h-2 w-2" />
           </a>
           <span>/</span>

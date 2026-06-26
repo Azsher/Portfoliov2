@@ -13,49 +13,39 @@ interface Project {
   descriptionEs: string;
   descriptionEn: string;
   demoUrl?: string;
+  repoUrl?: string;
+  previewUrl?: string;
 }
 
 const projectsList: Project[] = [
   {
-    id: 'hyper-automation',
-    title: 'HYPER-AUTOMATION HUB',
-    sub: 'Workflow orchestration & autonomous logical triggers.',
-    techs: ['n8n', 'FastAPI', 'Python', 'Docker'],
-    descriptionEs: 'Orquestación federada de flujos masivos de trabajo, integrando colas distribuidas, control recursivo de errores distribuidos y agentes autónomos de IA.',
-    descriptionEn: 'Federated orchestration of massive workflow pipelines, integrating distributed event systems, comprehensive error handling, and reactive AI models.',
-    demoUrl: '#',
+    id: 'tocaaqui',
+    title: 'TOCAAQUÍ',
+    sub: 'Plataforma que conecta músicos con espacios culturales.',
+    techs: ['Vue.js', 'JavaScript', 'C#', 'MySQL', 'REST API'],
+    descriptionEs: 'Aplicación web que conecta músicos independientes con espacios culturales disponibles para presentaciones. Desarrollada con arquitectura Domain-Driven Design (DDD) en equipo de 5 personas.',
+    descriptionEn: 'Web platform connecting independent musicians with cultural venues available for live performances. Built with Domain-Driven Design (DDD) architecture in a 5-person team.',
+    demoUrl: 'https://1asi0730-2510-4370-g1-tocaaqui.github.io/Landing-Page/',
+    repoUrl: 'https://github.com/1ASI0730-2510-4370-G1-TocaAqui',
+    previewUrl: 'https://www.youtube.com/embed/M2A_4JCBG9s',
     metrics: [
-      { key: 'throughput', value: '450k/d', labelEs: 'Hilos Diarios', labelEn: 'Daily Threads' },
-      { key: 'latency', value: '18ms', labelEs: 'Latencia Media', labelEn: 'Avg Latency' },
-      { key: 'uptime', value: '99.99%', labelEs: 'SLA Cumplido', labelEn: 'SLA Uptime' },
+      { key: 'throughput', value: '5', labelEs: 'Integrantes', labelEn: 'Team Members' },
+      { key: 'deadlocks', value: 'DDD', labelEs: 'Arquitectura', labelEn: 'Architecture' },
+      { key: 'uptime', value: '3', labelEs: 'Bounded Ctx.', labelEn: 'Bounded Ctx.' },
     ],
   },
   {
-    id: 'b2b-analytics',
-    title: 'REAL-TIME B2B DASH',
-    sub: 'Live operational dashboards with custom socket layers.',
-    techs: ['Next.js', 'React', 'D3.js', 'TypeScript'],
-    descriptionEs: 'Plataforma corporativa de analíticas en tiempo real alimentada por WebSocket estructurado, con visualizaciones fluidas mediante D3 y carga progresiva híbrida.',
-    descriptionEn: 'Corporate real-time metrics tool powered by optimized custom socket streams, with fluid D3-driven render pipelines and progressive chunking.',
-    demoUrl: '#',
+    id: 'inmoshare',
+    title: 'INMOSHARE',
+    sub: 'Gestión inmobiliaria con pagos compartidos entre inquilinos.',
+    techs: ['Angular', 'TypeScript', 'Spring Boot', 'Java', 'MySQL'],
+    descriptionEs: 'Plataforma de gestión de propiedades inmobiliarias que permite a múltiples inquilinos dividir y administrar pagos de forma colaborativa. Full-stack con backend REST en Java Spring Boot.',
+    descriptionEn: 'Real estate management platform enabling multiple tenants to split and manage shared payments collaboratively. Full-stack application with a Java Spring Boot REST backend.',
+    repoUrl: 'https://github.com/Azsher',
     metrics: [
-      { key: 'fps', value: '144fps', labelEs: 'Frecuencia Render', labelEn: 'Render Freq' },
-      { key: 'sockets', value: '10k', labelEs: 'Conex. Simul', labelEn: 'Simul Sockets' },
-      { key: 'load', value: '0.4s', labelEs: 'Carga Inicial', labelEn: 'Init Load' },
-    ],
-  },
-  {
-    id: 'cluster-db',
-    title: 'SENTINEL ENGINE',
-    sub: 'Self-correcting relational clustering & scaling query buffers.',
-    techs: ['PostgreSQL', 'Python', 'FastAPI', 'TypeScript'],
-    descriptionEs: 'Sistema de monitoreo de base de datos relacional con optimizador asíncrono inductivo que previene bloqueos físicos de lectura mediante indexación adaptativa.',
-    descriptionEn: 'Relational database observer and query optimizer that intercepts read requests asynchronously to avoid deadlocks via automated index tuning.',
-    demoUrl: '#',
-    metrics: [
-      { key: 'io', value: '5.2GB/s', labelEs: 'Ancho Banda IO', labelEn: 'IO Bandwidth' },
-      { key: 'deadlocks', value: '0', labelEs: 'Interbloqueos', labelEn: 'Deadlocks' },
-      { key: 'queries', value: '25k/s', labelEs: 'Rendimiento', labelEn: 'Throughput' },
+      { key: 'throughput', value: '5', labelEs: 'Integrantes', labelEn: 'Team Members' },
+      { key: 'deadlocks', value: 'JWT', labelEs: 'Autenticación', labelEn: 'Auth' },
+      { key: 'uptime', value: '2024', labelEs: 'Año', labelEn: 'Year' },
     ],
   },
 ];
@@ -174,43 +164,48 @@ export default function StackedProjects({ language, isDark = true }: StackedProj
                         </p>
 
                         {/* Demo Player */}
-                        <div className="relative w-full aspect-video rounded-xl border border-neutral-200/80 dark:border-white/10 bg-neutral-50/90 dark:bg-black/60 overflow-hidden group/player shadow-inner flex flex-col justify-between p-4 my-2">
-                          <div className="absolute inset-0 bg-[radial-gradient(#808080_1px,transparent_1px)] [background-size:16px_16px] opacity-15 dark:opacity-[0.07] pointer-events-none" />
-                          <div className="absolute top-0 left-0 w-full h-[1.5px] bg-indigo-500/35 dark:bg-indigo-400/25 animate-[bounce_8s_infinite] pointer-events-none" />
-
-                          <div className="relative flex justify-between items-center text-[9px] font-mono uppercase tracking-widest text-neutral-450 dark:text-white/40">
-                            <span className="flex items-center gap-1.5 font-bold">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                              STREAM_DEMO: ACTIVE_VIEW_MONITOR
-                            </span>
-                            <span className="font-bold bg-neutral-200 dark:bg-white/10 px-1.5 py-0.5 rounded text-neutral-500 dark:text-white/60">
-                              1080P // DEMO_REF
-                            </span>
-                          </div>
-
-                          <div className="relative flex flex-col items-center justify-center gap-2 my-auto py-2">
-                            <div className="w-10 h-10 shrink-0 aspect-square rounded-full border border-neutral-300 dark:border-white/10 bg-white/90 dark:bg-[#111111]/90 backdrop-blur-md shadow-md flex items-center justify-center text-neutral-800 dark:text-white hover:scale-105 transition-transform duration-300 cursor-pointer">
-                              <svg className="w-3.5 h-3.5 fill-current ml-0.5" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z" />
-                              </svg>
+                        <div className="relative w-full aspect-video rounded-xl border border-neutral-200/80 dark:border-white/10 overflow-hidden shadow-inner my-2">
+                          {proj.previewUrl ? (
+                            <iframe
+                              src={proj.previewUrl}
+                              title={proj.title}
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              className="absolute inset-0 w-full h-full"
+                            />
+                          ) : (
+                            <div className="absolute inset-0 bg-neutral-50/90 dark:bg-black/60 flex flex-col justify-between p-4">
+                              <div className="absolute inset-0 bg-[radial-gradient(#808080_1px,transparent_1px)] [background-size:16px_16px] opacity-15 dark:opacity-[0.07] pointer-events-none" />
+                              <div className="absolute top-0 left-0 w-full h-[1.5px] bg-indigo-500/35 dark:bg-indigo-400/25 animate-[bounce_8s_infinite] pointer-events-none" />
+                              <div className="relative flex justify-between items-center text-[9px] font-mono uppercase tracking-widest text-neutral-450 dark:text-white/40">
+                                <span className="flex items-center gap-1.5 font-bold">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                  STREAM_DEMO: ACTIVE_VIEW_MONITOR
+                                </span>
+                                <span className="font-bold bg-neutral-200 dark:bg-white/10 px-1.5 py-0.5 rounded text-neutral-500 dark:text-white/60">
+                                  1080P // DEMO_REF
+                                </span>
+                              </div>
+                              <div className="relative flex flex-col items-center justify-center gap-2 my-auto py-2">
+                                <div className="w-10 h-10 shrink-0 rounded-full border border-neutral-300 dark:border-white/10 bg-white/90 dark:bg-[#111111]/90 backdrop-blur-md shadow-md flex items-center justify-center text-neutral-800 dark:text-white">
+                                  <svg className="w-3.5 h-3.5 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                                </div>
+                                <span className="text-[10px] font-mono tracking-wider text-neutral-850 dark:text-white font-bold block text-center">
+                                  {t.demoPlaceholder}
+                                </span>
+                                <span className="text-[8px] font-mono text-neutral-455 dark:text-white/40 block mt-0.5 text-center">
+                                  {t.demoPlaceholderSub}
+                                </span>
+                              </div>
+                              <div className="relative flex items-center gap-2 text-[8px] font-mono text-neutral-400 dark:text-white/40 border-t border-neutral-200/50 dark:border-white/5 pt-2">
+                                <span>0:00</span>
+                                <div className="flex-1 h-1 rounded bg-neutral-200 dark:bg-white/10 relative overflow-hidden">
+                                  <div className="absolute top-0 left-0 h-full w-[35%] bg-gradient-to-r from-indigo-500 to-teal-400" />
+                                </div>
+                                <span>0:45</span>
+                              </div>
                             </div>
-                            <div className="text-center px-4">
-                              <span className="text-[10px] font-mono tracking-wider text-neutral-850 dark:text-white font-bold block">
-                                {t.demoPlaceholder}
-                              </span>
-                              <span className="text-[8px] font-mono text-neutral-455 dark:text-white/40 block mt-0.5">
-                                {t.demoPlaceholderSub}
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="relative flex items-center gap-2 text-[8px] font-mono text-neutral-400 dark:text-white/40 border-t border-neutral-200/50 dark:border-white/5 pt-2">
-                            <span>0:00</span>
-                            <div className="flex-1 h-1 rounded bg-neutral-200 dark:bg-white/10 relative overflow-hidden">
-                              <div className="absolute top-0 left-0 h-full w-[35%] bg-gradient-to-r from-indigo-500 to-teal-400" />
-                            </div>
-                            <span>0:45</span>
-                          </div>
+                          )}
                         </div>
 
                         {/* Tech Stack */}
@@ -262,14 +257,31 @@ export default function StackedProjects({ language, isDark = true }: StackedProj
                         </div>
 
                         {/* Watch Demo Link */}
-                        <div className="pt-5 pb-2 border-t border-neutral-200 dark:border-white/10 mt-2 flex justify-end">
-                          <a
-                            href={proj.demoUrl || '#'}
-                            className="inline-flex items-center gap-2 px-4 py-2.5 border border-neutral-900 dark:border-white/15 text-white dark:text-black bg-neutral-900 dark:bg-white hover:bg-transparent dark:hover:bg-transparent hover:text-neutral-900 dark:hover:text-white hover:border-neutral-900 dark:hover:border-white rounded-xl transition-all font-mono text-[9px] tracking-widest uppercase font-bold text-center group/demobtn active:scale-98"
-                          >
-                            <span>{t.demoBtn}</span>
-                            <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover/demobtn:translate-x-0.5 group-hover/demobtn:-translate-y-0.5" />
-                          </a>
+                        <div className="pt-5 pb-2 border-t border-neutral-200 dark:border-white/10 mt-2 flex justify-end gap-2">
+                          {proj.repoUrl && (
+                            <a
+                              href={proj.repoUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 px-4 py-2.5 border border-neutral-300 dark:border-white/10 text-neutral-800 dark:text-white bg-transparent hover:border-neutral-500 dark:hover:border-white/30 rounded-xl transition-all font-mono text-[9px] tracking-widest uppercase font-bold active:scale-98"
+                            >
+                              <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                              </svg>
+                              GitHub
+                            </a>
+                          )}
+                          {proj.demoUrl && proj.demoUrl !== '#' && (
+                            <a
+                              href={proj.demoUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 px-4 py-2.5 border border-neutral-900 dark:border-white/15 text-white dark:text-black bg-neutral-900 dark:bg-white hover:bg-transparent dark:hover:bg-transparent hover:text-neutral-900 dark:hover:text-white hover:border-neutral-900 dark:hover:border-white rounded-xl transition-all font-mono text-[9px] tracking-widest uppercase font-bold text-center group/demobtn active:scale-98"
+                            >
+                              <span>{t.demoBtn}</span>
+                              <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover/demobtn:translate-x-0.5 group-hover/demobtn:-translate-y-0.5" />
+                            </a>
+                          )}
                         </div>
                       </div>
                     </motion.div>
@@ -327,50 +339,49 @@ export default function StackedProjects({ language, isDark = true }: StackedProj
                   {language === 'es' ? currentProj.descriptionEs : currentProj.descriptionEn}
                 </p>
 
-                {/* DEMO MEDIA TEMPLATE PLACEHOLDER */}
-                <div className="relative w-full aspect-video rounded-xl border border-neutral-200/80 dark:border-white/10 bg-neutral-50/90 dark:bg-black/60 overflow-hidden group/player shadow-inner flex flex-col justify-between p-4 my-2">
-                  {/* Grid background inside player */}
-                  <div className="absolute inset-0 bg-[radial-gradient(#808080_1px,transparent_1px)] [background-size:16px_16px] opacity-15 dark:opacity-[0.07] pointer-events-none" />
-                  
-                  {/* Decorative horizontal bouncing scan line */}
-                  <div className="absolute top-0 left-0 w-full h-[1.5px] bg-indigo-500/35 dark:bg-indigo-400/25 animate-[bounce_8s_infinite] pointer-events-none" />
-
-                  {/* Player telemetry bar info */}
-                  <div className="relative flex justify-between items-center text-[9px] font-mono uppercase tracking-widest text-neutral-450 dark:text-white/40">
-                    <span className="flex items-center gap-1.5 font-bold">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      STREAM_DEMO: ACTIVE_VIEW_MONITOR
-                    </span>
-                    <span className="font-bold bg-neutral-200 dark:bg-white/10 px-1.5 py-0.5 rounded text-neutral-500 dark:text-white/60">
-                      1080P // DEMO_REF
-                    </span>
-                  </div>
-
-                  {/* Play circle / prompt overlay */}
-                  <div className="relative flex flex-col items-center justify-center gap-2 my-auto py-2">
-                    <div className="w-12 h-12 shrink-0 aspect-square rounded-full border border-neutral-300 dark:border-white/10 bg-white/90 dark:bg-[#111111]/90 backdrop-blur-md shadow-md flex items-center justify-center text-neutral-800 dark:text-white hover:scale-105 transition-transform duration-300 cursor-pointer hover:border-neutral-400 dark:hover:border-white/20">
-                      <svg className="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
+                {/* DEMO MEDIA */}
+                <div className="relative w-full aspect-video rounded-xl border border-neutral-200/80 dark:border-white/10 overflow-hidden shadow-inner my-2">
+                  {currentProj.previewUrl ? (
+                    <iframe
+                      src={currentProj.previewUrl}
+                      title={currentProj.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="absolute inset-0 w-full h-full"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-neutral-50/90 dark:bg-black/60 flex flex-col justify-between p-4">
+                      <div className="absolute inset-0 bg-[radial-gradient(#808080_1px,transparent_1px)] [background-size:16px_16px] opacity-15 dark:opacity-[0.07] pointer-events-none" />
+                      <div className="absolute top-0 left-0 w-full h-[1.5px] bg-indigo-500/35 dark:bg-indigo-400/25 animate-[bounce_8s_infinite] pointer-events-none" />
+                      <div className="relative flex justify-between items-center text-[9px] font-mono uppercase tracking-widest text-neutral-450 dark:text-white/40">
+                        <span className="flex items-center gap-1.5 font-bold">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                          STREAM_DEMO: ACTIVE_VIEW_MONITOR
+                        </span>
+                        <span className="font-bold bg-neutral-200 dark:bg-white/10 px-1.5 py-0.5 rounded text-neutral-500 dark:text-white/60">
+                          1080P // DEMO_REF
+                        </span>
+                      </div>
+                      <div className="relative flex flex-col items-center justify-center gap-2 my-auto py-2">
+                        <div className="w-12 h-12 shrink-0 rounded-full border border-neutral-300 dark:border-white/10 bg-white/90 dark:bg-[#111111]/90 backdrop-blur-md shadow-md flex items-center justify-center text-neutral-800 dark:text-white">
+                          <svg className="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                        </div>
+                        <span className="text-[11px] font-mono tracking-wider text-neutral-800 dark:text-white font-bold block text-center">
+                          {t.demoPlaceholder}
+                        </span>
+                        <span className="text-[9px] font-mono text-neutral-450 dark:text-white/40 block text-center">
+                          {t.demoPlaceholderSub}
+                        </span>
+                      </div>
+                      <div className="relative flex items-center gap-3 text-[9px] font-mono text-neutral-400 dark:text-white/40 border-t border-neutral-200/50 dark:border-white/5 pt-3">
+                        <span>0:00</span>
+                        <div className="flex-1 h-1 rounded bg-neutral-200 dark:bg-white/10 relative overflow-hidden">
+                          <div className="absolute top-0 left-0 h-full w-[35%] bg-gradient-to-r from-indigo-500 to-teal-400" />
+                        </div>
+                        <span>0:45</span>
+                      </div>
                     </div>
-                    <div className="text-center px-4">
-                      <span className="text-[11px] font-mono tracking-wider text-neutral-800 dark:text-white font-bold block">
-                        {t.demoPlaceholder}
-                      </span>
-                      <span className="text-[9px] font-mono text-neutral-450 dark:text-white/40 block mt-0.5">
-                        {t.demoPlaceholderSub}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Player bottom interface */}
-                  <div className="relative flex items-center gap-3 text-[9px] font-mono text-neutral-400 dark:text-white/40 border-t border-neutral-200/50 dark:border-white/5 pt-3">
-                    <span>0:00</span>
-                    <div className="flex-1 h-1 rounded bg-neutral-200 dark:bg-white/10 relative overflow-hidden">
-                      <div className="absolute top-0 left-0 h-full w-[35%] bg-gradient-to-r from-indigo-500 to-teal-400" />
-                    </div>
-                    <span>0:45</span>
-                  </div>
+                  )}
                 </div>
 
                 {/* Tech Stack Horizontal List */}
@@ -422,14 +433,31 @@ export default function StackedProjects({ language, isDark = true }: StackedProj
                 </div>
 
                 {/* Action CTA: Watch/View Demo Button */}
-                <div className="pt-6 border-t border-neutral-200 dark:border-white/10 mt-6 flex justify-end">
-                  <a
-                    href={currentProj.demoUrl || '#'}
-                    className="inline-flex items-center gap-2 px-5 py-3.5 border border-neutral-900 dark:border-white/15 text-white dark:text-black bg-neutral-900 dark:bg-white hover:bg-transparent dark:hover:bg-transparent hover:text-neutral-900 dark:hover:text-white hover:border-neutral-900 dark:hover:border-white rounded-xl transition-all font-mono text-xs tracking-widest uppercase font-bold text-center group/demobtn active:scale-98 shadow-sm flex items-center justify-center placeholder-no-referrer pointer-events-auto"
-                  >
-                    <span>{t.demoBtn}</span>
-                    <ArrowUpRight className="h-4.5 w-4.5 transition-transform group-hover/demobtn:translate-x-0.5 group-hover/demobtn:-translate-y-0.5" />
-                  </a>
+                <div className="pt-6 border-t border-neutral-200 dark:border-white/10 mt-6 flex justify-end gap-3">
+                  {currentProj.repoUrl && (
+                    <a
+                      href={currentProj.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-3.5 border border-neutral-300 dark:border-white/10 text-neutral-800 dark:text-white bg-transparent hover:border-neutral-500 dark:hover:border-white/30 rounded-xl transition-all font-mono text-xs tracking-widest uppercase font-bold text-center active:scale-98"
+                    >
+                      <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                      </svg>
+                      GitHub
+                    </a>
+                  )}
+                  {currentProj.demoUrl && currentProj.demoUrl !== '#' && (
+                    <a
+                      href={currentProj.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-3.5 border border-neutral-900 dark:border-white/15 text-white dark:text-black bg-neutral-900 dark:bg-white hover:bg-transparent dark:hover:bg-transparent hover:text-neutral-900 dark:hover:text-white hover:border-neutral-900 dark:hover:border-white rounded-xl transition-all font-mono text-xs tracking-widest uppercase font-bold text-center group/demobtn active:scale-98 shadow-sm pointer-events-auto"
+                    >
+                      <span>{t.demoBtn}</span>
+                      <ArrowUpRight className="h-4.5 w-4.5 transition-transform group-hover/demobtn:translate-x-0.5 group-hover/demobtn:-translate-y-0.5" />
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>
