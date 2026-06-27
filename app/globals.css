@@ -109,6 +109,21 @@
   box-shadow: 0 16px 45px 0 rgba(0, 0, 0, 0.65);
 }
 
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 18s linear infinite;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
 @media (max-width: 767px) {
   .perf-mobile .glassmorphism,
   .perf-mobile .liquid-glass {

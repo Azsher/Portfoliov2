@@ -23,14 +23,14 @@ export default function PageLoader({ language, isDark, onComplete }: PageLoaderP
     'BOOT::Inicializando núcleo de comandos...',
     'INTEGRATION::Cargando flujos Make & n8n...',
     'DATA::Estableciendo conexiones de base de datos...',
-    'PLINCO_ENGINE::Optimizando módulos Next.js...',
+    'INV_ENGINE::Optimizando módulos Next.js...',
     'PORTFOLIO::Renderizando entorno gráfico...',
     'SYS_READY::Sistema cargado con éxito.'
   ] : [
     'BOOT::Initializing command core...',
     'INTEGRATION::Loading Make & n8n workflows...',
     'DATA::Establishing secure telemetry connection...',
-    'PLINCO_ENGINE::Optimizing Next.js elements...',
+    'INV_ENGINE::Optimizing Next.js elements...',
     'PORTFOLIO::Rendering visual viewport...',
     'SYS_READY::Engine compiled successfully.'
   ];

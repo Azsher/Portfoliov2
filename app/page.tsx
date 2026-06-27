@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { motion, AnimatePresence, MotionConfig } from 'motion/react';
+import emailjs from '@emailjs/browser';
 import {
   Shield,
   Clock,
@@ -23,13 +24,15 @@ import {
   Building2,
   Download,
   ArrowUpRight,
-  Cpu
+  Cpu,
+  Linkedin
 } from 'lucide-react';
 import HeroRoleTypewriter from '@/components/HeroRoleTypewriter';
 import StackedProjects from '@/components/StackedProjects';
 import FloatingNavbar from '@/components/FloatingNavbar';
 import ExperienceDashboard from '@/components/ExperienceDashboard';
 import PageLoader from '@/components/PageLoader';
+import CompanyTicker from '@/components/CompanyTicker';
 import { useMobile } from '@/hooks/use-mobile';
 
 const ThreeTunnel = dynamic(() => import('@/components/ThreeTunnel'), { ssr: false });
@@ -40,11 +43,9 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
   const [language, setLanguage] = useState<'es' | 'en'>('es');
   const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
-  const [contactName, setContactName] = useState('');
-  const [contactEmail, setContactEmail] = useState('');
-  const [contactMsg, setContactMsg] = useState('');
-  const [isTransmitting, setIsTransmitting] = useState(false);
-  const [transmissionSuccess, setTransmissionSuccess] = useState(false);
+  const contactFormRef = React.useRef<HTMLFormElement>(null);
+  const [isSending, setIsSending] = useState(false);
+  const [sendStatus, setSendStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [cvDownloaded, setCvDownloaded] = useState(false);
 
   // Load initial theme preference from localStorage or system scheme
@@ -90,8 +91,8 @@ export default function Page() {
 
       aboutTitle: 'Sobre Mí',
       aboutSub: 'CONÓCEME',
-      aboutDesc1: 'Desarrollador Fullstack Sr con 6 años de experiencia, los últimos 3 años trabajando de forma remota para empresas de EE.UU. con tecnologías como Next.js, NestJS, Java Spring Boot, Azure y DevOps.',
-      aboutDesc2: 'Me especializo en el desarrollo de soluciones complejas para telemetría financiera, automatización retail, CI/CD y pruebas de calidad. Actualmente lidero iniciativas de IA como Tech Lead en Entel, construyendo plataformas de speech-to-text que procesan cientos de miles de llamadas diarias.',
+      aboutDesc1: 'Desarrollador Full Stack con experiencia real en producción. En Entel construyo la plataforma interna de inversiones con Next.js y Django — lideré la migración que redujo los tiempos de carga de 15s a 1.5s (10x) y desarrollé dashboards financieros con aprobaciones de proyectos en tiempo real.',
+      aboutDesc2: 'En Nova Academy automaticé 5 procesos clave con Make.com y Power Automate, reduciendo errores manuales un 15% y tiempos de ejecución un 20%. También tuve un rol como Gen AI Trainee, donde usé IA generativa para producir +20 piezas de contenido y mejorar la eficiencia del equipo en un 30%.',
       aboutCvBtn: 'Descargar CV',
       aboutLinkIn: 'LinkedIn',
       aboutGit: 'GitHub',
@@ -109,18 +110,22 @@ export default function Page() {
 
       coreStackTitle: 'PILA EXECUTORA CENTRAL',
 
-      contactTitle: 'TRANSMISIÓN DE SEÑAL',
-      contactHeader: 'Inicie Conexión',
-      contactSub: 'Envíe un payload para iniciar diálogo sobre desarrollo o integraciones.',
-      placeholderName: 'Identificador / Su Nombre',
-      placeholderEmail: 'Dirección de Retorno / Su Email',
-      placeholderMsg: 'Mensaje / Detalles Técnicos...',
-      btnSend: 'Transmitir Paquete',
-      btnSending: 'Transmitiendo...',
-      successTitle: 'MENSAJE TRANSMITIDO',
-      successDesc: 'Paquete recibido. Socket de respuesta inicializado con su dirección de correo.',
+      contactTitle: 'CONTACTO',
+      contactHeader: 'Trabajemos juntos',
+      contactSub: 'Estoy disponible para roles en frontend, productos AI y automatización. Escríbeme o conéctate en LinkedIn.',
+      linkedinDesc: 'Si prefieres conectar directamente, encuéntrame en LinkedIn. Respondo en menos de 24 horas.',
+      linkedinBtn: 'Conectar en LinkedIn',
+      placeholderName: 'Tu nombre',
+      placeholderEmail: 'Tu email',
+      placeholderMsg: 'Cuéntame sobre el proyecto o rol...',
+      btnSend: 'Enviar mensaje',
+      btnSending: 'Enviando...',
+      successTitle: 'Mensaje enviado',
+      successDesc: 'Gracias por escribirme. Te responderé pronto.',
+      errorTitle: 'Error al enviar',
+      errorDesc: 'Algo salió mal. Por favor inténtalo de nuevo.',
 
-      footerMantra: 'SISTEMA_V_09 // ARQUITECTURA DIGITAL REFINADA PARA EL TRABAJO MODERNO',
+      footerMantra: 'AI_FRONTEND // CONSTRUYENDO INTERFACES DONDE LA IA Y EL USUARIO SE ENCUENTRAN',
     },
     en: {
       heroTitle: 'O_ANTAYHUA',
@@ -139,8 +144,8 @@ export default function Page() {
 
       aboutTitle: 'About Me',
       aboutSub: 'GET TO KNOW ME',
-      aboutDesc1: 'Senior Fullstack Developer with 6 years of experience, specializing the last 3 years in remote work for US-based companies using technologies such as Next.js, NestJS, Java Spring Boot, Azure, and DevOps.',
-      aboutDesc2: 'I specialize in delivering complex solutions for financial telemetry, retail automation, high-performance CI/CD pipelines, and rigorous quality testing. Currently serving as Tech Lead at Entel, leading AI initiatives and building speech-to-text speech processing engines handling hundreds of thousands of daily calls.',
+      aboutDesc1: 'Full Stack Developer with real production experience. At Entel I build the internal investment platform using Next.js and Django — I led the migration that cut load times from 15s to 1.5s (10x) and built real-time financial dashboards for project approvals.',
+      aboutDesc2: 'At Nova Academy I automated 5 key processes with Make.com and Power Automate, reducing manual errors by 15% and execution times by 20%. I also served as a Gen AI Trainee, using generative AI to produce 20+ content pieces and improve team efficiency by 30%.',
       aboutCvBtn: 'Download CV',
       aboutLinkIn: 'LinkedIn',
       aboutGit: 'GitHub',
@@ -158,40 +163,51 @@ export default function Page() {
 
       coreStackTitle: 'CORE RUNTIME STACK',
 
-      contactTitle: 'SIGNAL TRANSMISSION',
-      contactHeader: 'Initialize Connection',
-      contactSub: 'Send a formatted payload to trigger collaboration dialogues on distributed flows.',
-      placeholderName: 'Identifier / Your Name',
-      placeholderEmail: 'Return Path / Your Email',
-      placeholderMsg: 'Message / Technical Specifications...',
-      btnSend: 'Transmit Packet',
-      btnSending: 'Transmitting...',
-      successTitle: 'PACKET TRANSMITTED',
-      successDesc: 'Payload delivered. Return routing socket provisioned into your secure email.',
+      contactTitle: 'CONTACT',
+      contactHeader: "Let's work together",
+      contactSub: 'Available for frontend, AI products and automation roles. Send me a message or connect on LinkedIn.',
+      linkedinDesc: 'Prefer to connect directly? Find me on LinkedIn. I usually respond within 24 hours.',
+      linkedinBtn: 'Connect on LinkedIn',
+      placeholderName: 'Your name',
+      placeholderEmail: 'Your email',
+      placeholderMsg: 'Tell me about the project or role...',
+      btnSend: 'Send message',
+      btnSending: 'Sending...',
+      successTitle: 'Message sent',
+      successDesc: 'Thanks for reaching out. I will get back to you soon.',
+      errorTitle: 'Failed to send',
+      errorDesc: 'Something went wrong. Please try again.',
 
-      footerMantra: 'SYSTEM_V_09 // REFINED DIGITAL ARCHITECTURE FOR MODERN APPLICATIONS',
+      footerMantra: 'AI_FRONTEND // BUILDING INTERFACES WHERE AI AND USERS CONNECT',
     }
   };
 
   const t = languageDict[language];
 
-  // Contact form submission simulator
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!contactName || !contactEmail || !contactMsg) return;
+    if (!contactFormRef.current) return;
 
-    setIsTransmitting(true);
-    setTimeout(() => {
-      setIsTransmitting(false);
-      setTransmissionSuccess(true);
-      // Clean form
-      setContactName('');
-      setContactEmail('');
-      setContactMsg('');
+    setIsSending(true);
+    setSendStatus('idle');
 
-      // Clear toast after some seconds
-      setTimeout(() => setTransmissionSuccess(false), 8000);
-    }, 1500);
+    emailjs
+      .sendForm(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        contactFormRef.current,
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      )
+      .then(() => {
+        setSendStatus('success');
+        contactFormRef.current?.reset();
+        setTimeout(() => setSendStatus('idle'), 6000);
+      })
+      .catch(() => {
+        setSendStatus('error');
+        setTimeout(() => setSendStatus('idle'), 5000);
+      })
+      .finally(() => setIsSending(false));
   };
 
   return (
@@ -252,7 +268,7 @@ export default function Page() {
           />
 
           {/* LANDING CONTENT WRAPPER */}
-          <main className="flex-1 max-w-7xl w-full mx-auto px-6 md:px-12 py-12 flex flex-col gap-24 relative z-10">
+          <main className="flex-1 max-w-7xl w-full mx-auto px-6 md:px-12 py-12 flex flex-col gap-12 relative z-10">
 
         {/* SECTION 1: SYSTEM INTRO / HERO HEADER BLOCK */}
         <section
@@ -284,8 +300,8 @@ export default function Page() {
 
             <p className="text-sm md:text-base text-neutral-550 dark:text-white/60 leading-relaxed font-sans max-w-2xl m-0">
               {language === 'es'
-                ? 'Especialista en desarrollo web full-stack, arquitecturas de software de alta disponibilidad y automatización inteligente con enfoque en microservicios e inteligencia artificial.'
-                : 'Specializing in robust fullstack web architectures, telemetry stream protocols, and intelligent service automation pipelines.'}
+                ? 'Desarrollador Full Stack enfocado en Next.js, React y Django. Construyo plataformas web de alto rendimiento, automatizo procesos con Make.com y Power Automate, e integro IA generativa en flujos de trabajo reales.'
+                : 'Full Stack Developer focused on Next.js, React, and Django. I build high-performance web platforms, automate workflows with Make.com and Power Automate, and integrate generative AI into real work processes.'}
             </p>
 
             <div className="pt-6 flex flex-wrap gap-4">
@@ -355,7 +371,7 @@ export default function Page() {
         {/* SECTION 1.5: SOBRE MÍ / ABOUT ME */}
         <section
           id="about-section"
-          className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch min-h-[calc(100vh-6rem)] py-12 scroll-mt-16"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch py-12 scroll-mt-16"
         >
           {/* Main About Text card with custom liquid-glass effect */}
           <div className="lg:col-span-8 p-8 md:p-12 rounded-2xl liquid-glass relative overflow-hidden flex flex-col justify-between group/about">
@@ -461,26 +477,26 @@ export default function Page() {
             <div className="space-y-3 font-mono text-[11px] pt-4">
               <div className="flex justify-between items-center border-b border-neutral-200 dark:border-white/5 pb-1.5">
                 <span className="text-neutral-500 dark:text-white/40 uppercase">DESIG_ID</span>
-                <span className="font-bold text-neutral-900 dark:text-white text-right">SR_FULLSTACK</span>
+                <span className="font-bold text-neutral-900 dark:text-white text-right">FULLSTACK_DEV</span>
               </div>
               <div className="flex justify-between items-center border-b border-neutral-200 dark:border-white/5 pb-1.5">
                 <span className="text-neutral-500 dark:text-white/40 uppercase">EFF_EXP</span>
-                <span className="font-bold text-neutral-900 dark:text-white text-right">6.00+ YEARS</span>
+                <span className="font-bold text-neutral-900 dark:text-white text-right">2.00+ YEARS</span>
               </div>
               <div className="flex justify-between items-center border-b border-neutral-200 dark:border-white/5 pb-1.5">
                 <span className="text-neutral-500 dark:text-white/40 uppercase">LOC_REM</span>
-                <span className="text-teal-600 dark:text-teal-400 font-bold uppercase tracking-wider text-right">USA REMOTE OK</span>
+                <span className="text-teal-600 dark:text-teal-400 font-bold uppercase tracking-wider text-right">LIMA, PERU</span>
               </div>
               <div className="flex justify-between items-center text-[10px]">
-                <span className="text-neutral-500 dark:text-white/40 uppercase">REL_SLOT</span>
-                <span className="font-bold text-neutral-900 dark:text-white text-right">99.98% SLA</span>
+                <span className="text-neutral-500 dark:text-white/40 uppercase">STATUS</span>
+                <span className="font-bold text-emerald-600 dark:text-emerald-400 text-right">OPEN TO WORK</span>
               </div>
             </div>
           </div>
         </section>
 
         {/* SECTION 2: INTERACTIVE DISCOVERY PLAYGROUND (SANDBOX) */}
-        <section className="space-y-6 min-h-[calc(100vh-6rem)] flex flex-col justify-center py-12 scroll-mt-16" id="sandbox-section">
+        <section className="space-y-6 flex flex-col py-8 scroll-mt-16" id="sandbox-section">
           <div className="max-w-xl">
             <div className="flex items-center gap-2 mb-2">
               <div className="w-1.5 h-3 rounded bg-gradient-to-b from-indigo-500 to-teal-400" />
@@ -496,7 +512,7 @@ export default function Page() {
         </section>
 
         {/* SECTION 2.5: EXPERIENCIA PROFESIONAL & EMPRESAS */}
-        <section id="experience-section" className="space-y-8 min-h-[calc(100vh-6rem)] flex flex-col justify-center py-12 scroll-mt-16 bg-transparent relative">
+        <section id="experience-section" className="space-y-8 flex flex-col py-8 scroll-mt-16 bg-transparent relative">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <div className="w-1.5 h-3 rounded bg-gradient-to-b from-indigo-500 to-teal-400" />
@@ -512,101 +528,118 @@ export default function Page() {
           <ExperienceDashboard language={language} />
         </section>
 
+        {/* COMPANY TICKER */}
+        <div className="w-full">
+          <div className="flex items-center gap-2 mb-4">
+            <div className="w-1.5 h-2.5 rounded bg-gradient-to-r from-indigo-500 to-teal-400" />
+            <span className="text-xs font-bold tracking-widest text-neutral-400 dark:text-white/40 font-mono uppercase">
+              {language === 'es' ? 'EMPRESAS_ALIADAS' : 'TRUSTED_BY'}
+            </span>
+          </div>
+        </div>
+        <div className="w-full my-6" style={{ paddingTop: '18px' }}>
+          <CompanyTicker />
+        </div>
+
         {/* SECTION 4: FEATURED ARCHITECTURE & WORKS */}
-        <section id="projects-section" className="min-h-[calc(100vh-6rem)] flex flex-col justify-center py-12 scroll-mt-16">
+        <section id="projects-section" className="flex flex-col pb-8 scroll-mt-16">
           <StackedProjects language={language} isDark={isDarkMode} />
         </section>
 
-        {/* SECTION 5: PAYLOAD TRANSMISSION CONNECTOR (CONTACT) */}
-        <div id="contact-section" className="min-h-[calc(100vh-6rem)] flex flex-col justify-center py-12 scroll-mt-16 w-full">
-          <section
-            className="max-w-5xl mx-auto w-full p-10 md:p-14 border border-neutral-300/65 dark:border-white/15 rounded-2xl bg-white/95 dark:bg-[#141414]/90 shadow-[0_8px_30px_rgba(0,0,0,0.025)] dark:shadow-[0_15px_45px_rgba(0,0,0,0.65)] backdrop-blur-md relative overflow-hidden transition-all"
-          >
-            {/* Absolute Ambient Corner Glow */}
-            <div className="absolute -bottom-16 -right-16 w-64 h-64 bg-gradient-to-tl from-teal-500/10 to-indigo-500/5 blur-3xl pointer-events-none opacity-40" />
+        {/* SECTION 5: CONTACT */}
+        <div id="contact-section" className="flex flex-col py-8 scroll-mt-16 w-full">
+          <div className="flex items-center gap-2 mb-3">
+            <div className="w-1.5 h-2.5 rounded bg-gradient-to-r from-indigo-500 to-teal-400" />
+            <span className="text-xs font-bold tracking-widest text-neutral-400 dark:text-white/40 font-mono uppercase block">
+              {t.contactTitle}
+            </span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-black font-sans text-neutral-900 dark:text-white mb-2">{t.contactHeader}</h2>
+          <p className="text-sm text-neutral-500 dark:text-white/55 mb-10 max-w-xl">{t.contactSub}</p>
 
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-1.5 h-2.5 rounded bg-gradient-to-r from-indigo-500 to-teal-400" />
-              <span className="text-xs font-bold tracking-widest text-neutral-400 dark:text-white/40 font-mono uppercase block">
-                {t.contactTitle}
-              </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* LinkedIn Card */}
+            <div className="flex flex-col items-center justify-center p-8 border border-neutral-300/65 dark:border-white/15 rounded-2xl bg-white/95 dark:bg-[#141414]/90 shadow-[0_8px_30px_rgba(0,0,0,0.025)] dark:shadow-[0_15px_45px_rgba(0,0,0,0.65)] backdrop-blur-md text-center gap-5 transition-all hover:-translate-y-0.5 duration-300">
+              <div className="w-14 h-14 rounded-xl bg-indigo-500/10 dark:bg-indigo-500/15 flex items-center justify-center">
+                <Linkedin className="w-7 h-7 text-indigo-500 dark:text-indigo-400" />
+              </div>
+              <p className="text-sm text-neutral-500 dark:text-white/60 leading-relaxed max-w-xs">
+                {t.linkedinDesc}
+              </p>
+              <a
+                href="https://linkedin.com/in/oscar-antayhua"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 text-white font-semibold text-sm transition-all active:scale-95"
+              >
+                <Linkedin className="w-4 h-4" />
+                {t.linkedinBtn}
+              </a>
             </div>
-            <h3 className="text-3xl md:text-4xl font-black font-sans text-neutral-900 dark:text-white mb-2">{t.contactHeader}</h3>
-            <p className="text-sm text-neutral-500 dark:text-white/55 font-mono mb-8">{t.contactSub}</p>
 
-            <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {/* Contact Form */}
+            <div className="p-8 border border-neutral-300/65 dark:border-white/15 rounded-2xl bg-white/95 dark:bg-[#141414]/90 shadow-[0_8px_30px_rgba(0,0,0,0.025)] dark:shadow-[0_15px_45px_rgba(0,0,0,0.65)] backdrop-blur-md transition-all">
+              <form ref={contactFormRef} onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <input
                   type="text"
+                  name="name"
                   required
                   placeholder={t.placeholderName}
-                  value={contactName}
-                  onChange={(e) => setContactName(e.target.value)}
-                  className="w-full bg-neutral-50/90 dark:bg-[#111111]/90 border border-neutral-200/60 dark:border-white/10 hover:border-neutral-300 dark:hover:border-white/25 focus:border-neutral-800 dark:focus:border-white focus:outline-hidden p-4.5 text-sm font-mono rounded-lg text-neutral-800 dark:text-white placeholder-neutral-400 dark:placeholder-white/20 transition-all font-semibold"
+                  className="w-full bg-neutral-50/90 dark:bg-[#111111]/90 border border-neutral-200/60 dark:border-white/10 hover:border-neutral-300 dark:hover:border-white/25 focus:border-neutral-800 dark:focus:border-white/60 focus:outline-none p-3.5 text-sm rounded-lg text-neutral-800 dark:text-white placeholder-neutral-400 dark:placeholder-white/25 transition-all"
                 />
                 <input
                   type="email"
+                  name="email"
                   required
                   placeholder={t.placeholderEmail}
-                  value={contactEmail}
-                  onChange={(e) => setContactEmail(e.target.value)}
-                  className="w-full bg-neutral-50/90 dark:bg-[#111111]/90 border border-neutral-200/60 dark:border-white/10 hover:border-neutral-300 dark:hover:border-white/25 focus:border-neutral-800 dark:focus:border-white focus:outline-hidden p-4.5 text-sm font-mono rounded-lg text-neutral-800 dark:text-white placeholder-neutral-400 dark:placeholder-white/20 transition-all font-semibold"
+                  className="w-full bg-neutral-50/90 dark:bg-[#111111]/90 border border-neutral-200/60 dark:border-white/10 hover:border-neutral-300 dark:hover:border-white/25 focus:border-neutral-800 dark:focus:border-white/60 focus:outline-none p-3.5 text-sm rounded-lg text-neutral-800 dark:text-white placeholder-neutral-400 dark:placeholder-white/25 transition-all"
                 />
-              </div>
-              <textarea
-                required
-                rows={5}
-                placeholder={t.placeholderMsg}
-                value={contactMsg}
-                onChange={(e) => setContactMsg(e.target.value)}
-                className="w-full bg-neutral-50/90 dark:bg-[#111111]/90 border border-neutral-200/60 dark:border-white/10 hover:border-neutral-300 dark:hover:border-white/25 focus:border-neutral-800 dark:focus:border-white focus:outline-hidden p-4.5 text-sm font-mono rounded-lg text-neutral-800 dark:text-white placeholder-neutral-400 dark:placeholder-white/20 transition-all resize-none font-semibold"
-              />
+                <textarea
+                  name="message"
+                  required
+                  rows={4}
+                  placeholder={t.placeholderMsg}
+                  className="w-full bg-neutral-50/90 dark:bg-[#111111]/90 border border-neutral-200/60 dark:border-white/10 hover:border-neutral-300 dark:hover:border-white/25 focus:border-neutral-800 dark:focus:border-white/60 focus:outline-none p-3.5 text-sm rounded-lg text-neutral-800 dark:text-white placeholder-neutral-400 dark:placeholder-white/25 transition-all resize-none"
+                />
 
-              <button
-                type="submit"
-                disabled={isTransmitting}
-                className="w-full p-4.5 border border-neutral-900 dark:border-white text-white dark:text-black bg-neutral-900 dark:bg-white hover:bg-transparent dark:hover:bg-transparent hover:text-neutral-900 dark:hover:text-white rounded-lg transition-all font-mono font-bold text-sm tracking-widest uppercase cursor-pointer flex items-center justify-center gap-2 active:scale-98 disabled:opacity-50"
-              >
-                {isTransmitting ? (
-                  <>
-                    <Clock className="h-4 w-4 animate-spin" />
-                    {t.btnSending}
-                  </>
-                ) : (
-                  <>
-                    <Send className="h-4 w-4" />
-                    {t.btnSend}
-                  </>
-                )}
-              </button>
-            </form>
-
-            {/* Toast Transmission Status Overlays */}
-            <AnimatePresence>
-              {transmissionSuccess && (
-                <motion.div
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 15 }}
-                  className="absolute inset-0 bg-white/95 dark:bg-black/95 p-10 border border-emerald-500/20 rounded-xl flex flex-col justify-center items-center text-center z-50"
+                <button
+                  type="submit"
+                  disabled={isSending}
+                  className="w-full p-3.5 rounded-lg bg-neutral-900 dark:bg-white hover:bg-neutral-700 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 font-semibold text-sm transition-all flex items-center justify-center gap-2 active:scale-98 disabled:opacity-50"
                 >
-                  <CheckCircle2 className="h-14 w-14 text-emerald-450 dark:text-emerald-400 animate-pulse mb-4" />
-                  <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-bold tracking-widest uppercase mb-1">
-                    {t.successTitle}
-                  </span>
-                  <p className="text-sm font-sans text-neutral-700 dark:text-white/80 max-w-sm leading-relaxed">
-                    {t.successDesc}
-                  </p>
-                  <button
-                    onClick={() => setTransmissionSuccess(false)}
-                    className="mt-6 px-5 py-2.5 border border-neutral-250 hover:border-neutral-800 dark:border-white/25 dark:hover:border-white text-neutral-600 hover:text-neutral-900 dark:text-white/70 dark:hover:text-white rounded-lg font-mono text-xs tracking-wider uppercase transition-all"
-                  >
-                    Clear Log
-                  </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </section>
+                  {isSending ? (
+                    <>
+                      <Clock className="h-4 w-4 animate-spin" />
+                      {t.btnSending}
+                    </>
+                  ) : (
+                    <>
+                      <Send className="h-4 w-4" />
+                      {t.btnSend}
+                    </>
+                  )}
+                </button>
+
+                <AnimatePresence>
+                  {sendStatus !== 'idle' && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 6 }}
+                      className={`flex items-center gap-2 text-sm rounded-lg px-4 py-3 ${
+                        sendStatus === 'success'
+                          ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20'
+                          : 'bg-red-50 dark:bg-red-500/10 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-500/20'
+                      }`}
+                    >
+                      <CheckCircle2 className="h-4 w-4 shrink-0" />
+                      <span>{sendStatus === 'success' ? t.successDesc : t.errorDesc}</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </form>
+            </div>
+          </div>
         </div>
 
       </main>

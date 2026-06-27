@@ -1,7 +1,7 @@
 ﻿'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { Zap, Cpu, Terminal, Shield } from 'lucide-react';
 import { useMobile } from '@/hooks/use-mobile';
 
@@ -28,12 +28,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg',
     es: {
       title: 'JavaScript',
-      description: 'Lenguaje principal para desarrollo frontend y scripting. Utilizado en proyectos como TocaAquí con Vue.js, manejo de eventos, consumo de APIs REST y lógica de UI dinámica.',
+      description: 'Base del desarrollo frontend en Entel y proyectos universitarios. Consumo de APIs REST, manejo de eventos asíncronos y lógica de UI dinámica en la plataforma de inversiones.',
       practices: 'Preferir const/let sobre var, usar async/await para peticiones, modularizar lógica en funciones puras y evitar mutaciones directas del DOM.',
     },
     en: {
       title: 'JavaScript',
-      description: 'Primary language for frontend development and scripting. Used in projects like TocaAquí with Vue.js, event handling, REST API consumption, and dynamic UI logic.',
+      description: 'Foundation of frontend development at Entel and university projects. REST API consumption, async event handling, and dynamic UI logic in the investment platform.',
       practices: 'Prefer const/let over var, use async/await for requests, modularize logic into pure functions, and avoid direct DOM mutations.',
     },
   },
@@ -42,12 +42,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg',
     es: {
       title: 'TypeScript',
-      description: 'Tipado estático sobre JavaScript para proyectos Angular e Inmoshare. Mejora la detección de errores en tiempo de compilación y la mantenibilidad del código en equipos.',
+      description: 'Usado en Entel sobre Next.js para tipar componentes, hooks y contratos de API en la plataforma de inversiones. Reduce errores en tiempo de compilación y facilita el trabajo en equipo sobre una base de código compartida.',
       practices: 'Definir interfaces claras para modelos de datos, evitar el uso de "any", aprovechar tipos utilitarios como Partial o Pick para mayor flexibilidad.',
     },
     en: {
       title: 'TypeScript',
-      description: 'Static typing on top of JavaScript for Angular projects and Inmoshare. Improves compile-time error detection and code maintainability in team environments.',
+      description: 'Used at Entel on top of Next.js to type components, hooks, and API contracts in the investment platform. Reduces compile-time errors and eases collaborative work on a shared codebase.',
       practices: 'Define clear interfaces for data models, avoid "any" types, and leverage utility types like Partial or Pick for flexibility.',
     },
   },
@@ -56,12 +56,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/vuejs/vuejs-original.svg',
     es: {
       title: 'Vue.js',
-      description: 'Framework reactivo usado en la plataforma TocaAquí. Componentes SFC, sistema de routing con Vue Router y comunicación entre componentes con props y emit.',
+      description: 'Framework principal en el proyecto universitario TocaAquí, una plataforma de gestión de músicos y espacios culturales. Componentes SFC, Vue Router y comunicación entre componentes con props y emit.',
       practices: 'Separar lógica de negocio en composables reutilizables, usar v-model con moderación y mantener componentes enfocados en una sola responsabilidad.',
     },
     en: {
       title: 'Vue.js',
-      description: 'Reactive framework used in the TocaAquí platform. SFC components, routing with Vue Router, and component communication via props and emit.',
+      description: 'Primary framework in the TocaAquí university project, a platform for managing musicians and cultural venues. SFC components, Vue Router, and component communication via props and emit.',
       practices: 'Extract business logic into reusable composables, use v-model sparingly, and keep components focused on a single responsibility.',
     },
   },
@@ -70,12 +70,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/angularjs/angularjs-original.svg',
     es: {
       title: 'Angular',
-      description: 'Framework full frontend usado en Inmoshare. Módulos, servicios con inyección de dependencias, reactive forms y HttpClient para integración con APIs REST en Spring Boot.',
+      description: 'Usado en el proyecto universitario Inmoshare, una plataforma de gestión de inmuebles. Módulos por feature, servicios con inyección de dependencias, reactive forms e integración con Spring Boot via HttpClient.',
       practices: 'Organizar por módulos por feature, usar observables de RxJS para estado asíncrono y separar la lógica HTTP en servicios independientes del componente.',
     },
     en: {
       title: 'Angular',
-      description: 'Full frontend framework used in Inmoshare. Modules, services with dependency injection, reactive forms, and HttpClient for REST API integration with Spring Boot.',
+      description: 'Used in the Inmoshare university project, a property management platform. Feature modules, services with dependency injection, reactive forms, and Spring Boot integration via HttpClient.',
       practices: 'Organize by feature modules, use RxJS observables for async state, and separate HTTP logic into services independent from components.',
     },
   },
@@ -84,12 +84,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/nextjs/nextjs-original.svg',
     es: {
       title: 'Next.js',
-      description: 'Framework React para SSR e ISR. Utilizado en la plataforma Plinco de Entel, donde participé en la migración de versiones y optimización de tiempos de carga.',
+      description: 'Framework principal en Entel para la plataforma de inversiones. Lideré la migración de Next.js 12 a 16, reduciendo los tiempos de carga de 15s a 1.5s (10x). Implementé nuevos flujos de trabajo y dashboards financieros con datos en tiempo real.',
       practices: 'Usar App Router con componentes server-side por defecto, evitar "use client" innecesario y aprovechar el caché nativo de fetch para reducir llamadas redundantes.',
     },
     en: {
       title: 'Next.js',
-      description: 'React framework for SSR and ISR. Used on Entel\'s Plinco platform, where I contributed to version migration and load time optimization.',
+      description: 'Primary framework at Entel for the investment platform. Led the migration from Next.js 12 to 16, cutting load times from 15s to 1.5s (10x). Built new internal workflows and real-time financial dashboards.',
       practices: 'Use App Router with server components by default, avoid unnecessary "use client", and leverage native fetch caching to reduce redundant API calls.',
     },
   },
@@ -98,12 +98,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg',
     es: {
       title: 'C# / .NET',
-      description: 'Backend del proyecto TocaAquí. API RESTful con arquitectura DDD, entidades de dominio, repositorios y servicios de aplicación para gestión de músicos y espacios culturales.',
+      description: 'Backend del proyecto universitario TocaAquí. API RESTful con arquitectura DDD, entidades de dominio, repositorios y servicios de aplicación para la gestión de músicos y espacios culturales.',
       practices: 'Separar capas de dominio, aplicación e infraestructura, usar DTOs para comunicación entre capas y mantener las entidades libres de lógica de persistencia.',
     },
     en: {
       title: 'C# / .NET',
-      description: 'Backend of the TocaAquí project. RESTful API with DDD architecture, domain entities, repositories, and application services for managing musicians and cultural spaces.',
+      description: 'Backend for the TocaAquí university project. RESTful API with DDD architecture, domain entities, repositories, and application services for managing musicians and cultural spaces.',
       practices: 'Separate domain, application, and infrastructure layers, use DTOs for inter-layer communication, and keep entities free from persistence logic.',
     },
   },
@@ -112,12 +112,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/spring/spring-original.svg',
     es: {
       title: 'Java / Spring Boot',
-      description: 'Backend de Inmoshare. REST API con Spring MVC, JPA para persistencia en MySQL, autenticación JWT y sistema de pagos compartidos entre múltiples inquilinos.',
+      description: 'Backend del proyecto universitario Inmoshare. REST API con Spring MVC, JPA para persistencia en MySQL, autenticación JWT y sistema de pagos compartidos entre múltiples inquilinos.',
       practices: 'Usar @Service y @Repository para separar responsabilidades, validar DTOs con Bean Validation y configurar seguridad con Spring Security de forma granular.',
     },
     en: {
       title: 'Java / Spring Boot',
-      description: 'Inmoshare backend. REST API with Spring MVC, JPA for MySQL persistence, JWT authentication, and shared payment system across multiple tenants.',
+      description: 'Backend for the Inmoshare university project. REST API with Spring MVC, JPA for MySQL persistence, JWT authentication, and shared payment system across multiple tenants.',
       practices: 'Use @Service and @Repository to separate concerns, validate DTOs with Bean Validation, and configure security granularly with Spring Security.',
     },
   },
@@ -126,12 +126,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original.svg',
     es: {
       title: 'MySQL / SQL',
-      description: 'Base de datos relacional utilizada en TocaAquí e Inmoshare. Diseño de esquemas normalizados, relaciones entre entidades, consultas con JOINs y optimización básica de índices.',
+      description: 'Base de datos principal en los proyectos universitarios TocaAquí e Inmoshare. Diseño de esquemas normalizados, relaciones entre entidades, consultas con JOINs complejos y optimización de índices.',
       practices: 'Normalizar hasta 3NF como mínimo, usar claves foráneas con restricciones adecuadas y evitar consultas N+1 cargando relaciones de forma eficiente.',
     },
     en: {
       title: 'MySQL / SQL',
-      description: 'Relational database used in TocaAquí and Inmoshare. Normalized schema design, entity relationships, JOIN queries, and basic index optimization.',
+      description: 'Primary database in the TocaAquí and Inmoshare university projects. Normalized schema design, entity relationships, complex JOIN queries, and index optimization.',
       practices: 'Normalize to at least 3NF, use foreign keys with proper constraints, and avoid N+1 queries by loading relationships efficiently.',
     },
   },
@@ -140,12 +140,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/django/django-plain.svg',
     es: {
       title: 'Django (Python Backend)',
-      description: 'Backend principal en Entel. API REST con Django REST Framework, autenticación, manejo de modelos relacionales con Django ORM y despliegue en entornos de producción.',
-      practices: 'Separar lógica de negocio en servicios fuera de las vistas, usar serializers para validación de entrada, y aprovechar el ORM para consultas eficientes evitando queries N+1.',
+      description: 'Backend de la plataforma de inversiones en Entel. API REST con Django REST Framework conectada al frontend Next.js. Implementé optimizaciones en la capa de datos que redujeron los tiempos de descarga de reportes Excel de 10s a 3-5s.',
+      practices: 'Separar lógica de negocio en servicios fuera de las vistas, usar serializers para validación de entrada y aprovechar el ORM para consultas eficientes evitando queries N+1.',
     },
     en: {
       title: 'Django (Python Backend)',
-      description: 'Main backend at Entel. REST API with Django REST Framework, authentication, relational model management with Django ORM, and production environment deployment.',
+      description: 'Backend of the investment platform at Entel. REST API with Django REST Framework connected to the Next.js frontend. Implemented data layer optimizations that reduced Excel report download times from 10s to 3-5s.',
       practices: 'Keep business logic in service layers outside views, use serializers for input validation, and leverage the ORM for efficient queries avoiding N+1 patterns.',
     },
   },
@@ -154,12 +154,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg',
     es: {
       title: 'Python',
-      description: 'Scripting para análisis de datos, automatización de procesos repetitivos y exploración con herramientas de IA generativa. Certificación de inmersión IA con Alura.',
+      description: 'Lenguaje del backend en Entel (Django). Implementé mejoras en la capa de datos de la plataforma de inversiones, scripts de procesamiento y optimizaciones de consultas que impactaron directamente en el rendimiento de la plataforma.',
       practices: 'Usar entornos virtuales para aislar dependencias, preferir list comprehensions para transformaciones simples y documentar funciones con type hints.',
     },
     en: {
       title: 'Python',
-      description: 'Scripting for data analysis, automating repetitive processes, and experimenting with generative AI tooling. AI immersion certification with Alura.',
+      description: 'Backend language at Entel (Django). Implemented data layer improvements in the investment platform, processing scripts, and query optimizations that directly impacted platform performance.',
       practices: 'Use virtual environments to isolate dependencies, prefer list comprehensions for simple transforms, and document functions with type hints.',
     },
   },
@@ -168,12 +168,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/n8n-icon.png',
     es: {
       title: 'n8n & Automatización',
-      description: 'Automatización de 5 procesos clave en Nova Academy integrando Google Workspace y Microsoft 365. Reducción del 20% en tiempos de ejecución y 15% en errores manuales.',
+      description: 'Herramienta de automatización open-source para orquestar flujos entre sistemas. Experiencia conectando APIs, bases de datos y servicios externos en pipelines con manejo de errores y lógica condicional.',
       practices: 'Modularizar flujos en subflujos reutilizables, configurar nodos de error globales para cada workflow y validar payloads entrantes antes de procesarlos.',
     },
     en: {
       title: 'n8n & Automation',
-      description: 'Automated 5 key processes at Nova Academy integrating Google Workspace and Microsoft 365. Achieved 20% reduction in execution time and 15% fewer manual errors.',
+      description: 'Open-source automation tool for orchestrating flows between systems. Experience connecting APIs, databases, and external services in pipelines with error handling and conditional logic.',
       practices: 'Modularize flows into reusable subflows, configure global error handler nodes per workflow, and validate incoming payloads before processing.',
     },
   },
@@ -182,12 +182,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/lobehub/lobe-icons/refs/heads/master/packages/static-png/light/make-color.png',
     es: {
       title: 'Make.com (Integromat)',
-      description: 'Diseño de escenarios de automatización no-code con integración a Google Sheets, formularios y APIs externas. Certificaciones Make Foundation y Make Basic obtenidas.',
+      description: 'Herramienta principal de automatización en Nova Academy. Diseñé e implementé 5 procesos clave integrando Google Sheets, formularios y APIs externas, logrando una reducción del 20% en tiempos de ejecución y 15% en errores manuales. Certificaciones Make Foundation y Make Basic obtenidas.',
       practices: 'Estructurar escenarios en módulos lógicos independientes, usar filtros para evitar ejecuciones innecesarias y documentar cada módulo con notas descriptivas.',
     },
     en: {
       title: 'Make.com (Integromat)',
-      description: 'No-code automation scenario design integrating Google Sheets, forms, and external APIs. Make Foundation and Make Basic certifications obtained.',
+      description: 'Primary automation tool at Nova Academy. Designed and implemented 5 key processes integrating Google Sheets, forms, and external APIs, achieving 20% reduction in execution time and 15% fewer manual errors. Make Foundation and Make Basic certifications obtained.',
       practices: 'Structure scenarios into independent logical modules, use filters to avoid unnecessary executions, and document each module with descriptive notes.',
     },
   },
@@ -196,12 +196,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg',
     es: {
       title: 'Git & GitHub',
-      description: 'Control de versiones en todos los proyectos académicos y laborales. Flujo de trabajo con ramas por feature, pull requests y resolución de conflictos en equipos de 5 personas.',
+      description: 'Control de versiones en todos mis proyectos profesionales y académicos. En Entel trabajo con ramas por feature, pull requests con revisión de código y resolución de conflictos en un equipo de desarrollo activo.',
       practices: 'Escribir mensajes de commit descriptivos en tiempo presente, trabajar en ramas separadas por feature y revisar diffs antes de cada merge.',
     },
     en: {
       title: 'Git & GitHub',
-      description: 'Version control across all academic and professional projects. Feature-branch workflow, pull requests, and conflict resolution in 5-person teams.',
+      description: 'Version control across all professional and academic projects. At Entel I work with feature branches, pull requests with code review, and conflict resolution in an active development team.',
       practices: 'Write descriptive commit messages in present tense, work on separate feature branches, and review diffs before each merge.',
     },
   },
@@ -210,12 +210,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg',
     es: {
       title: 'HTML & CSS',
-      description: 'Base estructural y de estilos en todos los proyectos web. Layouts con Flexbox y Grid, responsive design, animaciones CSS y convenciones BEM para mantenibilidad.',
+      description: 'Base estructural en todos mis proyectos web, incluyendo la plataforma de inversiones en Entel. Layouts con Flexbox y Grid, responsive design, y base para frameworks como Tailwind CSS y React.',
       practices: 'Usar etiquetas semánticas para accesibilidad, evitar estilos inline, mantener specificity baja y organizar CSS en capas (base, componentes, utilidades).',
     },
     en: {
       title: 'HTML & CSS',
-      description: 'Structural and styling foundation across all web projects. Flexbox and Grid layouts, responsive design, CSS animations, and BEM conventions for maintainability.',
+      description: 'Structural foundation across all my web projects, including the investment platform at Entel. Flexbox and Grid layouts, responsive design, and foundation for frameworks like Tailwind CSS and React.',
       practices: 'Use semantic tags for accessibility, avoid inline styles, keep specificity low, and organize CSS in layers (base, components, utilities).',
     },
   },
@@ -224,12 +224,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original.svg',
     es: {
       title: 'React',
-      description: 'Librería UI declarativa base de Next.js, usada en Entel para construir componentes reutilizables, gestión de estado con hooks y renderizado eficiente del dashboard financiero en tiempo real.',
+      description: 'Base de Next.js en Entel. Construí componentes reutilizables para el dashboard financiero de la plataforma de inversiones, implementé hooks para gestión de estado y operaciones masivas sobre proyectos de inversión en tiempo real.',
       practices: 'Extraer lógica en custom hooks, evitar prop drilling con Context o estado local, y memorizar con useMemo/useCallback solo cuando el profiling lo justifique.',
     },
     en: {
       title: 'React',
-      description: 'Declarative UI library underlying Next.js, used at Entel to build reusable components, manage state with hooks, and efficiently render the real-time financial dashboard.',
+      description: 'Foundation of Next.js at Entel. Built reusable components for the financial dashboard of the investment platform, implemented hooks for state management, and bulk operations on investment projects in real time.',
       practices: 'Extract logic into custom hooks, avoid prop drilling with Context or local state, and memoize with useMemo/useCallback only when profiling justifies it.',
     },
   },
@@ -238,12 +238,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/tailwindcss/tailwindcss-original.svg',
     es: {
       title: 'Tailwind CSS',
-      description: 'Framework de utilidades CSS usado en Next.js y este portfolio. Permite un diseño consistente y responsive sin salir del JSX, con soporte nativo para dark mode y animaciones.',
+      description: 'Framework de utilidades usado en Entel y en este portfolio. Permite construir interfaces consistentes y responsive directamente en JSX, con dark mode nativo y componentes altamente personalizables.',
       practices: 'Evitar clases inline repetidas extrayendo componentes, usar el theme de Tailwind para tokens de diseño y aprovechar los plugins oficiales para forms y typography.',
     },
     en: {
       title: 'Tailwind CSS',
-      description: 'Utility-first CSS framework used in Next.js and this portfolio. Enables consistent, responsive design without leaving JSX, with native dark mode and animation support.',
+      description: 'Utility-first framework used at Entel and in this portfolio. Enables building consistent, responsive interfaces directly in JSX, with native dark mode and highly customizable components.',
       practices: 'Avoid repeated inline classes by extracting components, use the Tailwind theme for design tokens, and leverage official plugins for forms and typography.',
     },
   },
@@ -252,12 +252,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/astro/astro-original.svg',
     es: {
       title: 'Astro',
-      description: 'Framework estático con arquitectura Islands para sitios de contenido. Experiencia construyendo landing pages con integración de componentes React y Vue, con cero JavaScript por defecto.',
+      description: 'Framework estático con arquitectura Islands explorado en proyectos personales. Construcción de landing pages con integración de componentes React, con cero JavaScript enviado al cliente por defecto.',
       practices: 'Usar componentes .astro para páginas estáticas y reservar Islands interactivos solo donde la UI lo requiera, manteniendo el bundle de JS mínimo.',
     },
     en: {
       title: 'Astro',
-      description: 'Static framework with Islands architecture for content sites. Experience building landing pages with React and Vue component integration, shipping zero JavaScript by default.',
+      description: 'Static framework with Islands architecture explored in personal projects. Building landing pages with React component integration, shipping zero JavaScript to the client by default.',
       practices: 'Use .astro components for static pages and reserve interactive Islands only where the UI requires it, keeping the JS bundle minimal.',
     },
   },
@@ -266,12 +266,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg',
     es: {
       title: 'Node.js',
-      description: 'Runtime JavaScript server-side para scripts de automatización, herramientas CLI y servidores Express ligeros. Base del ecosistema npm usado en todos los proyectos frontend.',
+      description: 'Runtime del ecosistema JavaScript usado en todos mis proyectos frontend. Manejo de dependencias con npm, scripts de build y automatizaciones de desarrollo en el entorno Next.js de Entel.',
       practices: 'Usar módulos ES en lugar de CommonJS cuando sea posible, manejar errores asíncronos con try/catch en async/await y evitar bloquear el event loop con operaciones síncronas pesadas.',
     },
     en: {
       title: 'Node.js',
-      description: 'Server-side JavaScript runtime for automation scripts, CLI tools, and lightweight Express servers. Foundation of the npm ecosystem used across all frontend projects.',
+      description: 'JavaScript ecosystem runtime used across all my frontend projects. Dependency management with npm, build scripts, and development automations in the Entel Next.js environment.',
       practices: 'Use ES modules over CommonJS when possible, handle async errors with try/catch in async/await, and avoid blocking the event loop with heavy synchronous operations.',
     },
   },
@@ -280,12 +280,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg',
     es: {
       title: 'Java',
-      description: 'Lenguaje backend principal en Inmoshare junto a Spring Boot. POO sólida, manejo de colecciones, streams y JPA para persistencia. Enfocado en capas de servicio y repositorio.',
+      description: 'Lenguaje backend en el proyecto universitario Inmoshare con Spring Boot. POO, colecciones, streams y JPA para persistencia. Capas de servicio y repositorio siguiendo principios SOLID.',
       practices: 'Aplicar principios SOLID en diseño de clases, usar Optional para evitar NullPointerExceptions y preferir streams a bucles imperativos para transformaciones de datos.',
     },
     en: {
       title: 'Java',
-      description: 'Primary backend language in Inmoshare alongside Spring Boot. Strong OOP, collections, streams, and JPA for persistence. Focused on service and repository layers.',
+      description: 'Backend language in the Inmoshare university project with Spring Boot. OOP, collections, streams, and JPA for persistence. Service and repository layers following SOLID principles.',
       practices: 'Apply SOLID principles in class design, use Optional to avoid NullPointerExceptions, and prefer streams over imperative loops for data transformations.',
     },
   },
@@ -294,12 +294,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/fastapi/fastapi-original.svg',
     es: {
       title: 'REST APIs',
-      description: 'Diseño y consumo de APIs RESTful en todos los proyectos: TocaAquí (C#/.NET), Inmoshare (Spring Boot), Entel (Django + Next.js). Manejo de autenticación JWT, versionado y documentación con Swagger.',
+      description: 'Diseño y consumo de APIs RESTful en todos mis proyectos profesionales. En Entel integré el frontend Next.js con el backend Django de la plataforma de inversiones. En proyectos universitarios trabajé con APIs en C#/.NET y Spring Boot con autenticación JWT.',
       practices: 'Seguir convenciones REST (verbos HTTP correctos, códigos de estado semánticos), versionar endpoints desde el inicio y documentar contratos con OpenAPI para facilitar integración.',
     },
     en: {
       title: 'REST APIs',
-      description: 'Design and consumption of RESTful APIs across all projects: TocaAquí (C#/.NET), Inmoshare (Spring Boot), Entel (Django + Next.js). JWT authentication, versioning, and Swagger documentation.',
+      description: 'Design and consumption of RESTful APIs across all professional projects. At Entel I integrated the Next.js frontend with the Django backend of the investment platform. In university projects I worked with C#/.NET and Spring Boot APIs with JWT authentication.',
       practices: 'Follow REST conventions (correct HTTP verbs, semantic status codes), version endpoints from the start, and document contracts with OpenAPI to ease integration.',
     },
   },
@@ -308,12 +308,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg',
     es: {
       title: 'PostgreSQL',
-      description: 'Base de datos relacional avanzada usada en entornos de producción. Soporte para tipos de datos complejos, consultas avanzadas con CTEs y window functions para análisis de datos.',
+      description: 'Base de datos relacional avanzada explorada en proyectos personales y de estudio. Consultas con CTEs, window functions y optimización de índices para análisis de datos.',
       practices: 'Usar índices parciales para consultas frecuentes con filtros, aprovechar EXPLAIN ANALYZE para diagnosticar consultas lentas y separar schemas por dominio funcional.',
     },
     en: {
       title: 'PostgreSQL',
-      description: 'Advanced relational database used in production environments. Support for complex data types, advanced queries with CTEs, and window functions for data analysis.',
+      description: 'Advanced relational database explored in personal and study projects. Queries with CTEs, window functions, and index optimization for data analysis.',
       practices: 'Use partial indexes for frequent filtered queries, leverage EXPLAIN ANALYZE to diagnose slow queries, and separate schemas by functional domain.',
     },
   },
@@ -322,12 +322,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/29/Microsoft_Power_Automate_%282025-present%29.svg/1280px-Microsoft_Power_Automate_%282025-present%29.svg.png',
     es: {
       title: 'Power Automate',
-      description: 'Automatización de flujos de trabajo dentro del ecosistema Microsoft 365 en Nova Academy. Integración con SharePoint, Outlook y Teams para reducir tareas manuales repetitivas.',
+      description: 'Automatización de flujos dentro del ecosistema Microsoft 365 en Nova Academy. Integré SharePoint, Outlook y Teams para eliminar tareas manuales repetitivas, como parte de la reducción del 20% en tiempos de ejecución de procesos.',
       practices: 'Agrupar acciones relacionadas en bloques de scope, manejar errores con bloques try-catch nativos y registrar ejecuciones en listas SharePoint para auditoría.',
     },
     en: {
       title: 'Power Automate',
-      description: 'Workflow automation within the Microsoft 365 ecosystem at Nova Academy. Integration with SharePoint, Outlook, and Teams to reduce repetitive manual tasks.',
+      description: 'Flow automation within the Microsoft 365 ecosystem at Nova Academy. Integrated SharePoint, Outlook, and Teams to eliminate repetitive manual tasks, contributing to a 20% reduction in process execution times.',
       practices: 'Group related actions into scope blocks, handle errors with native try-catch scopes, and log executions to SharePoint lists for auditing.',
     },
   },
@@ -336,12 +336,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_Apps_Script.svg',
     es: {
       title: 'Google Apps Script',
-      description: 'Scripts de automatización sobre Google Workspace: generación automática de reportes en Sheets, envío de correos desde Gmail y sincronización de datos entre formularios y hojas de cálculo.',
+      description: 'Scripts de automatización sobre Google Workspace en Nova Academy. Generación automática de reportes en Sheets, envío de correos desde Gmail y sincronización de datos entre formularios y hojas de cálculo como complemento a los flujos de Make.',
       practices: 'Evitar llamadas al servicio en loops, cachear datos con CacheService para reducir cuota de ejecución y estructurar el código en funciones pequeñas y reutilizables.',
     },
     en: {
       title: 'Google Apps Script',
-      description: 'Automation scripts on Google Workspace: automatic report generation in Sheets, sending emails from Gmail, and syncing data between forms and spreadsheets.',
+      description: 'Automation scripts on Google Workspace at Nova Academy. Automatic report generation in Sheets, email sending from Gmail, and data syncing between forms and spreadsheets as a complement to Make flows.',
       practices: 'Avoid service calls inside loops, cache data with CacheService to reduce execution quota, and structure code into small reusable functions.',
     },
   },
@@ -350,12 +350,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/azuresqldatabase/azuresqldatabase-original.svg',
     es: {
       title: 'SQL',
-      description: 'Consultas relacionales en MySQL y entornos académicos. JOINs complejos, subconsultas, agregaciones y diseño de esquemas normalizados. Certificación SQL Intermediate en HackerRank (2025).',
+      description: 'Consultas relacionales aplicadas en MySQL (TocaAquí, Inmoshare) y en el ORM de Django en Entel. JOINs complejos, subconsultas y agregaciones para reportes financieros. Certificación SQL Intermediate en HackerRank (2025).',
       practices: 'Filtrar antes de hacer JOIN para reducir el dataset, usar aliases descriptivos, evitar SELECT * en producción y validar planes de ejecución en consultas críticas.',
     },
     en: {
       title: 'SQL',
-      description: 'Relational queries in MySQL and academic environments. Complex JOINs, subqueries, aggregations, and normalized schema design. SQL Intermediate certification on HackerRank (2025).',
+      description: 'Relational queries applied in MySQL (TocaAquí, Inmoshare) and Django ORM at Entel. Complex JOINs, subqueries, and aggregations for financial reports. SQL Intermediate certification on HackerRank (2025).',
       practices: 'Filter before joining to reduce dataset size, use descriptive aliases, avoid SELECT * in production, and validate execution plans on critical queries.',
     },
   },
@@ -364,12 +364,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original.svg',
     es: {
       title: 'NoSQL / MongoDB',
-      description: 'Bases de datos no relacionales para almacenamiento flexible de documentos. Certificación MongoDB Intro (2023). Modelado de documentos embebidos vs referenciados según los patrones de acceso.',
+      description: 'Bases de datos no relacionales estudiadas de forma independiente. Modelado de documentos embebidos vs referenciados según patrones de acceso. Certificación MongoDB Intro (2023).',
       practices: 'Diseñar el esquema según cómo se consultan los datos (query-driven design), evitar documentos excesivamente anidados y usar índices compuestos para consultas frecuentes.',
     },
     en: {
       title: 'NoSQL / MongoDB',
-      description: 'Non-relational databases for flexible document storage. MongoDB Intro certification (2023). Embedded vs referenced document modeling based on access patterns.',
+      description: 'Non-relational databases studied independently. Embedded vs referenced document modeling based on access patterns. MongoDB Intro certification (2023).',
       practices: 'Design schema based on how data is queried (query-driven design), avoid deeply nested documents, and use compound indexes for frequent queries.',
     },
   },
@@ -378,12 +378,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://upload.wikimedia.org/wikipedia/commons/c/cf/New_Power_BI_Logo.svg',
     es: {
       title: 'Power BI',
-      description: 'Creación de dashboards interactivos para visualización de datos en contextos académicos y laborales. Conexión a Excel y SQL, uso de DAX para métricas calculadas y diseño de reportes.',
+      description: 'Dashboards interactivos para visualización de datos en proyectos académicos. Conexión a Excel y SQL, métricas calculadas con DAX y diseño de reportes orientados al usuario final.',
       practices: 'Modelar las relaciones entre tablas antes de crear medidas, usar DAX en lugar de columnas calculadas cuando sea posible y mantener los reportes simples y orientados al usuario final.',
     },
     en: {
       title: 'Power BI',
-      description: 'Interactive dashboard creation for data visualization in academic and professional contexts. Excel and SQL connections, DAX for calculated metrics, and report design.',
+      description: 'Interactive dashboards for data visualization in academic projects. Excel and SQL connections, DAX for calculated metrics, and end-user oriented report design.',
       practices: 'Model table relationships before creating measures, prefer DAX measures over calculated columns when possible, and keep reports simple and end-user focused.',
     },
   },
@@ -392,12 +392,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Workspace_Logo.svg/512px-Google_Workspace_Logo.svg.png',
     es: {
       title: 'Google Workspace',
-      description: 'Suite de productividad usada en Nova Academy para automatizar procesos de contenido y comunicación. Dominio de Google Sheets, Drive, Forms, Gmail y Slides integrados en flujos de trabajo.',
+      description: 'Suite central en Nova Academy para automatizar procesos de contenido y comunicación. Integré Google Sheets, Drive, Forms y Gmail en flujos de Make y Apps Script, logrando reportes automáticos y una reducción del 15% en errores manuales.',
       practices: 'Usar plantillas reutilizables en Docs y Sheets, organizar Drive con estructura de carpetas consistente y automatizar notificaciones con Google Forms + Apps Script.',
     },
     en: {
       title: 'Google Workspace',
-      description: 'Productivity suite used at Nova Academy to automate content and communication processes. Proficient in Google Sheets, Drive, Forms, Gmail, and Slides integrated into workflows.',
+      description: 'Central suite at Nova Academy for automating content and communication processes. Integrated Google Sheets, Drive, Forms, and Gmail into Make and Apps Script flows, achieving automatic reports and a 15% reduction in manual errors.',
       practices: 'Use reusable templates in Docs and Sheets, organize Drive with a consistent folder structure, and automate notifications with Google Forms + Apps Script.',
     },
   },
@@ -406,12 +406,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/512px-ChatGPT_logo.svg.png',
     es: {
       title: 'IA Generativa (ChatGPT / Gemini)',
-      description: 'Uso avanzado de herramientas de IA para creación de contenido, automatización de tareas y mejora de productividad. En Nova Academy logré un 30% de mejora en eficiencia usando Gen AI.',
+      description: 'Rol dedicado en Nova Academy como Gen AI Trainee. Usé herramientas de IA para crear +20 piezas de contenido digital, aumentar interacción en redes un 15% y mejorar la eficiencia de creación de contenido en un 30%.',
       practices: 'Estructurar prompts con rol, contexto, tarea y formato esperado. Iterar sobre el output con prompts de refinamiento y mantener un banco de prompts reutilizables por caso de uso.',
     },
     en: {
       title: 'Generative AI (ChatGPT / Gemini)',
-      description: 'Advanced use of AI tools for content creation, task automation, and productivity improvement. At Nova Academy achieved 30% efficiency improvement using Gen AI tools.',
+      description: 'Dedicated Gen AI Trainee role at Nova Academy. Used AI tools to create 20+ digital content pieces, increase social media engagement by 15%, and improve content creation efficiency by 30%.',
       practices: 'Structure prompts with role, context, task, and expected format. Iterate on output with refinement prompts and maintain a reusable prompt library per use case.',
     },
   },
@@ -420,12 +420,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://vectorseek.com/wp-content/uploads/2023/10/Scrum-Logo-Vector.svg-.png',
     es: {
       title: 'Scrum & Metodologías Ágiles',
-      description: 'Certificación Scrum Foundation (CertiProf, 2023). Aplicado en todos los proyectos universitarios: sprints, backlog, daily standups, retrospectivas y entrega incremental de valor.',
+      description: 'Aplicado en equipos de desarrollo tanto en Entel como en proyectos universitarios. Sprints, backlog grooming, daily standups y retrospectivas. Certificación Scrum Foundation (CertiProf, 2023).',
       practices: 'Definir criterios de aceptación claros antes del sprint, estimar con story points en equipo y priorizar el backlog según valor de negocio, no urgencia técnica.',
     },
     en: {
       title: 'Scrum & Agile Methodologies',
-      description: 'Scrum Foundation certification (CertiProf, 2023). Applied across all university projects: sprints, backlog management, daily standups, retrospectives, and incremental delivery.',
+      description: 'Applied in development teams at both Entel and university projects. Sprints, backlog grooming, daily standups, and retrospectives. Scrum Foundation certification (CertiProf, 2023).',
       practices: 'Define clear acceptance criteria before the sprint, estimate with team story points, and prioritize backlog by business value rather than technical urgency.',
     },
   },
@@ -434,12 +434,12 @@ const techRegistry: Record<string, TechDetails> = {
     logo: 'https://raw.githubusercontent.com/devicons/devicon/master/icons/jira/jira-original.svg',
     es: {
       title: 'Jira & Trello',
-      description: 'Gestión de tareas y seguimiento de proyectos en equipos universitarios. Creación de tableros Kanban, backlog grooming y trazabilidad de issues durante el desarrollo de TocaAquí e Inmoshare.',
+      description: 'Gestión de tareas en equipos de desarrollo. Tableros Kanban, backlog grooming y trazabilidad de issues en proyectos universitarios (TocaAquí, Inmoshare) y coordinación de tareas en Entel.',
       practices: 'Mantener las tareas atómicas y completables en un sprint, vincular issues con commits de GitHub y actualizar el estado en tiempo real para visibilidad del equipo.',
     },
     en: {
       title: 'Jira & Trello',
-      description: 'Task management and project tracking in university teams. Kanban boards, backlog grooming, and issue traceability during TocaAquí and Inmoshare development.',
+      description: 'Task management in development teams. Kanban boards, backlog grooming, and issue traceability in university projects (TocaAquí, Inmoshare) and task coordination at Entel.',
       practices: 'Keep tasks atomic and completable within a sprint, link issues to GitHub commits, and update status in real time for team visibility.',
     },
   },
@@ -513,6 +513,48 @@ const techRegistry: Record<string, TechDetails> = {
       practices: 'Design each skill with a clear prompt, scope it to a single task, and document expected inputs so the agent can execute it without ambiguity.',
     },
   },
+  NotebookLM: {
+    mastery: 'avanzado',
+    logo: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/notebooklm-icon.png',
+    es: {
+      title: 'NotebookLM',
+      description: 'Herramienta de Google para análisis y síntesis de documentos con IA. Usada para procesar documentación técnica extensa, generar resúmenes estructurados y crear bases de conocimiento a partir de múltiples fuentes.',
+      practices: 'Cargar fuentes específicas y acotadas por tema, formular preguntas concretas para obtener síntesis precisas y usar los audio overviews para revisiones rápidas de contenido extenso.',
+    },
+    en: {
+      title: 'NotebookLM',
+      description: "Google's AI-powered document analysis and synthesis tool. Used to process extensive technical documentation, generate structured summaries, and build knowledge bases from multiple sources.",
+      practices: 'Load specific, topic-scoped sources, ask concrete questions to get precise syntheses, and use audio overviews for quick reviews of extensive content.',
+    },
+  },
+  Perplexity: {
+    mastery: 'avanzado',
+    logo: 'https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/webp/perplexity.webp',
+    es: {
+      title: 'Perplexity AI',
+      description: 'Motor de búsqueda con IA para investigación técnica y validación de información. Usado para explorar tendencias del ecosistema, comparar librerías y obtener respuestas fundamentadas con fuentes verificables en tiempo real.',
+      practices: 'Usar el modo Pro para búsquedas técnicas profundas, citar las fuentes retornadas antes de implementar soluciones y combinar con Claude para razonamiento sobre los resultados obtenidos.',
+    },
+    en: {
+      title: 'Perplexity AI',
+      description: 'AI-powered search engine for technical research and information validation. Used to explore ecosystem trends, compare libraries, and get sourced answers with verifiable real-time references.',
+      practices: 'Use Pro mode for deep technical searches, verify returned sources before implementing solutions, and combine with Claude for reasoning over the results.',
+    },
+  },
+  Gemini: {
+    mastery: 'intermedio',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Google_Gemini_icon_2025.svg/960px-Google_Gemini_icon_2025.svg.png?_=20250728014952',
+    es: {
+      title: 'Gemini',
+      description: 'Modelo multimodal de Google integrado en el ecosistema de herramientas Google Workspace. Usado para análisis de imágenes, procesamiento de documentos largos y asistencia en flujos de contenido y automatización.',
+      practices: 'Aprovechar la ventana de contexto extensa para procesar documentos completos, usar Gemini en Google Docs/Sheets para flujos integrados y explorar sus capacidades multimodales para análisis visual.',
+    },
+    en: {
+      title: 'Gemini',
+      description: "Google's multimodal model integrated into the Google Workspace ecosystem. Used for image analysis, long document processing, and assistance in content and automation workflows.",
+      practices: 'Leverage the large context window to process full documents, use Gemini in Google Docs/Sheets for integrated workflows, and explore multimodal capabilities for visual analysis.',
+    },
+  },
 };
 
 interface MatterSandboxProps {
@@ -538,7 +580,7 @@ const mobileCategories: { labelEs: string; labelEn: string; keys: string[] }[] =
   {
     labelEs: 'IA & Agentes',
     labelEn: 'AI & Agents',
-    keys: ['Claude', 'Claude Code', 'MCP', 'SDD', 'Skills'],
+    keys: ['Claude', 'Claude Code', 'MCP', 'SDD', 'Skills', 'NotebookLM', 'Perplexity', 'Gemini'],
   },
   {
     labelEs: 'Datos & DevOps',
@@ -547,97 +589,180 @@ const mobileCategories: { labelEs: string; labelEn: string; keys: string[] }[] =
   },
 ];
 
+const ALL = '__all__';
+
 export default function MatterSandbox({ language }: MatterSandboxProps) {
   const isMobile = useMobile();
-  const [openCategories, setOpenCategories] = useState<Record<number, boolean>>({ 0: true });
   const [selectedTech, setSelectedTech] = useState<string>('JavaScript');
+  const [filterCat, setFilterCat]       = useState<string>(ALL);
+  const [filterLvl, setFilterLvl]       = useState<MasteryLevel | typeof ALL>(ALL);
 
   const t = {
-    es: { mastery: 'Nivel', practices: 'Mejores Prácticas', emptySelect: 'Selecciona una tecnología' },
-    en: { mastery: 'Level', practices: 'Best Practices',    emptySelect: 'Select a technology'        },
+    es: { mastery: 'Nivel', practices: 'Mejores Prácticas', all: 'Todos', showing: 'Mostrando' },
+    en: { mastery: 'Level', practices: 'Best Practices',    all: 'All',   showing: 'Showing'   },
   }[language];
 
-  const currentTechData = techRegistry[selectedTech];
-
-  const masteryStyles: Record<MasteryLevel, string> = {
-    intermedio: 'bg-amber-100 text-amber-700 border-amber-300 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-700/40',
-    avanzado:   'bg-indigo-100 text-indigo-700 border-indigo-300 dark:bg-indigo-900/30 dark:text-indigo-400 dark:border-indigo-700/40',
-    experto:    'bg-teal-100 text-teal-700 border-teal-300 dark:bg-teal-900/30 dark:text-teal-400 dark:border-teal-700/40',
-  };
   const masteryLabels: Record<MasteryLevel, { es: string; en: string }> = {
     intermedio: { es: 'Intermedio', en: 'Intermediate' },
     avanzado:   { es: 'Avanzado',   en: 'Advanced'     },
     experto:    { es: 'Experto',    en: 'Expert'        },
   };
+  const masteryStyles: Record<MasteryLevel, string> = {
+    intermedio: 'bg-amber-100 text-amber-700 border-amber-300 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-700/40',
+    avanzado:   'bg-indigo-100 text-indigo-700 border-indigo-300 dark:bg-indigo-900/30 dark:text-indigo-400 dark:border-indigo-700/40',
+    experto:    'bg-teal-100 text-teal-700 border-teal-300 dark:bg-teal-900/30 dark:text-teal-400 dark:border-teal-700/40',
+  };
+  const masteryActiveCls: Record<MasteryLevel, string> = {
+    intermedio: 'bg-amber-500 text-white border-amber-500',
+    avanzado:   'bg-indigo-600 text-white border-indigo-600',
+    experto:    'bg-teal-500 text-white border-teal-500',
+  };
 
-  const toggleCategory = (idx: number) =>
-    setOpenCategories(prev => ({ ...prev, [idx]: !prev[idx] }));
+  // All unique techs flattened
+  const allKeys = mobileCategories.flatMap(c => c.keys).filter(k => techRegistry[k]);
 
-  const categoryList = mobileCategories.map((cat, catIdx) => {
-    const isOpen = !!openCategories[catIdx];
-    const techs = cat.keys.filter(k => techRegistry[k]);
-    return (
-      <div key={catIdx} className={`rounded-2xl border overflow-hidden transition-all duration-200 ${isOpen ? 'border-neutral-900 dark:border-white/25 bg-white dark:bg-[#141414]' : 'border-neutral-200 dark:border-white/10 bg-white/50 dark:bg-[#0e0e0e]/60'}`}>
-        <button
-          onClick={() => toggleCategory(catIdx)}
-          className="w-full flex items-center justify-between px-5 py-4 cursor-pointer focus:outline-none"
-        >
-          <span className="text-sm font-black font-mono text-neutral-800 dark:text-white tracking-tight">
-            {language === 'es' ? cat.labelEs : cat.labelEn}
-          </span>
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-mono text-neutral-400 dark:text-white/35">{techs.length}</span>
-            <svg className={`w-4 h-4 text-neutral-400 dark:text-white/40 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </button>
-        <AnimatePresence initial={false}>
-          {isOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-              className="overflow-hidden"
-            >
-              <div className="px-4 pb-4 border-t border-neutral-200/50 dark:border-white/10">
-                <div className="grid grid-cols-2 gap-2 pt-3">
-                  {techs.map(key => {
-                    const data = techRegistry[key];
-                    const isSelected = key === selectedTech;
-                    return (
-                      <button
-                        key={key}
-                        onClick={() => setSelectedTech(key)}
-                        className={`flex items-center gap-2.5 p-3 rounded-xl border text-left transition-all duration-150 active:scale-95 cursor-pointer ${
-                          isSelected
-                            ? 'bg-white dark:bg-[#1a1a1a] border-neutral-900 dark:border-white/30 ring-1 ring-neutral-900/10 dark:ring-white/20 shadow-sm'
-                            : 'bg-neutral-50 dark:bg-[#0e0e0e]/80 border-neutral-200 dark:border-white/10 hover:bg-white dark:hover:bg-[#161616] hover:border-neutral-400 dark:hover:border-white/30 hover:shadow-sm'
-                        }`}
-                      >
-                        {data.logo && (
-                          <img src={data.logo} alt={key} className="w-5 h-5 object-contain flex-shrink-0" referrerPolicy="no-referrer"
-                            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }} />
-                        )}
-                        <span className="text-xs font-bold font-mono text-neutral-800 dark:text-white truncate">{key}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    );
+  // Apply filters
+  const visibleKeys = allKeys.filter(key => {
+    const data = techRegistry[key];
+    const catMatch = filterCat === ALL || mobileCategories.find(c => (language === 'es' ? c.labelEs : c.labelEn) === filterCat)?.keys.includes(key);
+    const lvlMatch = filterLvl === ALL || data.mastery === filterLvl;
+    return catMatch && lvlMatch;
   });
 
+  const currentTechData = techRegistry[selectedTech];
+
+  // Keep selection valid when filters change
+  React.useEffect(() => {
+    if (!visibleKeys.includes(selectedTech) && visibleKeys.length > 0) {
+      setSelectedTech(visibleKeys[0]);
+    }
+  }, [filterCat, filterLvl]);
+
+  const filterBar = (
+    <div className="space-y-3 mb-5">
+      {/* Category filters */}
+      <div className="flex flex-wrap gap-2">
+        <button
+          onClick={() => setFilterCat(ALL)}
+          className={`px-3 py-1.5 rounded-lg border text-[11px] font-mono font-bold tracking-wide transition-all cursor-pointer ${
+            filterCat === ALL
+              ? 'bg-neutral-900 dark:bg-white text-white dark:text-black border-neutral-900 dark:border-white'
+              : 'bg-transparent text-neutral-500 dark:text-white/40 border-neutral-200 dark:border-white/10 hover:border-neutral-400 dark:hover:border-white/30 hover:text-neutral-800 dark:hover:text-white/70'
+          }`}
+        >
+          {t.all}
+        </button>
+        {mobileCategories.map(cat => {
+          const label = language === 'es' ? cat.labelEs : cat.labelEn;
+          const active = filterCat === label;
+          return (
+            <button
+              key={label}
+              onClick={() => setFilterCat(active ? ALL : label)}
+              className={`px-3 py-1.5 rounded-lg border text-[11px] font-mono font-bold tracking-wide transition-all cursor-pointer ${
+                active
+                  ? 'bg-neutral-900 dark:bg-white text-white dark:text-black border-neutral-900 dark:border-white'
+                  : 'bg-transparent text-neutral-500 dark:text-white/40 border-neutral-200 dark:border-white/10 hover:border-neutral-400 dark:hover:border-white/30 hover:text-neutral-800 dark:hover:text-white/70'
+              }`}
+            >
+              {label}
+            </button>
+          );
+        })}
+      </div>
+      {/* Level filters */}
+      <div className="flex flex-wrap gap-2 items-center">
+        <span className="text-[10px] font-mono text-neutral-400 dark:text-white/25 uppercase tracking-widest mr-1">
+          {t.mastery}:
+        </span>
+        <button
+          onClick={() => setFilterLvl(ALL)}
+          className={`px-3 py-1.5 rounded-lg border text-[11px] font-mono font-bold tracking-wide transition-all cursor-pointer ${
+            filterLvl === ALL
+              ? 'bg-neutral-900 dark:bg-white text-white dark:text-black border-neutral-900 dark:border-white'
+              : 'bg-transparent text-neutral-500 dark:text-white/40 border-neutral-200 dark:border-white/10 hover:border-neutral-400 dark:hover:border-white/30 hover:text-neutral-800 dark:hover:text-white/70'
+          }`}
+        >
+          {t.all}
+        </button>
+        {(['intermedio', 'avanzado', 'experto'] as MasteryLevel[]).map(lvl => {
+          const active = filterLvl === lvl;
+          return (
+            <button
+              key={lvl}
+              onClick={() => setFilterLvl(active ? ALL : lvl)}
+              className={`px-3 py-1.5 rounded-lg border text-[11px] font-mono font-bold tracking-wide transition-all cursor-pointer ${
+                active
+                  ? masteryActiveCls[lvl]
+                  : 'bg-transparent text-neutral-500 dark:text-white/40 border-neutral-200 dark:border-white/10 hover:border-neutral-400 dark:hover:border-white/30 hover:text-neutral-800 dark:hover:text-white/70'
+              }`}
+            >
+              {masteryLabels[lvl][language]}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  const pillGrid = (
+    <div className="flex flex-wrap gap-2">
+      {visibleKeys.map(key => {
+        const data = techRegistry[key];
+        const isSelected = key === selectedTech;
+        return (
+          <motion.button
+            key={key}
+            layout
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.15 }}
+            onClick={() => setSelectedTech(key)}
+            className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-mono font-semibold transition-all duration-150 cursor-pointer active:scale-95 ${
+              isSelected
+                ? 'bg-neutral-950 dark:bg-white text-white dark:text-black border-neutral-950 dark:border-white shadow-sm'
+                : 'bg-white/70 dark:bg-white/[0.04] text-neutral-700 dark:text-white/65 border-neutral-200 dark:border-white/10 hover:bg-white dark:hover:bg-white/[0.08] hover:border-neutral-400 dark:hover:border-white/25 hover:text-neutral-900 dark:hover:text-white'
+            }`}
+          >
+            {data.logo && (
+              <img
+                src={data.logo}
+                alt={key}
+                className="w-4 h-4 object-contain flex-shrink-0"
+                referrerPolicy="no-referrer"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+              />
+            )}
+            {key}
+          </motion.button>
+        );
+      })}
+      {visibleKeys.length === 0 && (
+        <p className="text-xs font-mono text-neutral-400 dark:text-white/30 py-4">
+          {language === 'es' ? 'Sin resultados para este filtro.' : 'No results for this filter.'}
+        </p>
+      )}
+    </div>
+  );
+
+  const counter = (
+    <p className="text-[10px] font-mono text-neutral-400 dark:text-white/25 mt-4">
+      {t.showing} {visibleKeys.length} / {allKeys.length}
+    </p>
+  );
+
   const detailPanel = currentTechData ? (
-    <div className="rounded-2xl border border-neutral-300/65 dark:border-white/15 bg-white/95 dark:bg-[#141414]/90 backdrop-blur-md overflow-hidden">
+    <motion.div
+      key={selectedTech}
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
+      className="rounded-2xl border border-neutral-300/65 dark:border-white/15 bg-white/95 dark:bg-[#141414]/90 backdrop-blur-md overflow-hidden"
+    >
       <div className="px-6 py-5 border-b border-neutral-200/50 dark:border-white/10">
         <div className="flex items-center gap-3">
-          <span className="p-2.5 rounded-xl border border-indigo-500/20 dark:border-teal-400/15 bg-gradient-to-br from-indigo-500/5 to-teal-500/5 flex items-center justify-center w-11 h-11">
+          <span className="p-2.5 rounded-xl border border-indigo-500/20 dark:border-teal-400/15 bg-gradient-to-br from-indigo-500/5 to-teal-500/5 flex items-center justify-center w-11 h-11 flex-shrink-0">
             {currentTechData.logo ? (
               <img src={currentTechData.logo} alt={selectedTech} className="w-6 h-6 object-contain" referrerPolicy="no-referrer" />
             ) : (
@@ -647,7 +772,7 @@ export default function MatterSandbox({ language }: MatterSandboxProps) {
           <div>
             <h4 className="text-base font-bold text-neutral-900 dark:text-white font-mono">{currentTechData[language].title}</h4>
             <span className={`mt-1 inline-block px-2.5 py-0.5 rounded-full border text-[10px] font-bold font-mono uppercase tracking-wider ${masteryStyles[currentTechData.mastery]}`}>
-              {language === 'es' ? masteryLabels[currentTechData.mastery].es : masteryLabels[currentTechData.mastery].en}
+              {masteryLabels[currentTechData.mastery][language]}
             </span>
           </div>
         </div>
@@ -673,32 +798,36 @@ export default function MatterSandbox({ language }: MatterSandboxProps) {
         </div>
         <div className="pt-2 border-t border-dashed border-neutral-200 dark:border-neutral-800 flex items-center gap-2 text-[10px] font-mono text-neutral-400">
           <Zap className="h-3.5 w-3.5 text-neutral-500" />
-          <span>REF: {selectedTech} // {t.mastery}: {language === 'es' ? masteryLabels[currentTechData.mastery].es : masteryLabels[currentTechData.mastery].en}</span>
+          <span>REF: {selectedTech} // {t.mastery}: {masteryLabels[currentTechData.mastery][language]}</span>
         </div>
       </div>
-    </div>
+    </motion.div>
   ) : (
     <div className="rounded-2xl border border-neutral-200 dark:border-white/10 bg-white/60 dark:bg-[#0e0e0e]/60 p-8 flex flex-col items-center justify-center text-center">
       <Cpu className="h-8 w-8 text-neutral-300 dark:text-neutral-700 animate-pulse mb-3" />
-      <p className="text-xs font-mono text-neutral-400">{t.emptySelect}</p>
+      <p className="text-xs font-mono text-neutral-400">{language === 'es' ? 'Selecciona una tecnología' : 'Select a technology'}</p>
     </div>
   );
 
   if (isMobile) {
     return (
-      <div className="w-full space-y-3" id="sandbox-section">
-        {categoryList}
-        <div className="pt-1">{detailPanel}</div>
+      <div className="w-full space-y-4" id="sandbox-section">
+        {filterBar}
+        {pillGrid}
+        {counter}
+        <div className="pt-2">{detailPanel}</div>
       </div>
     );
   }
 
   return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6" id="sandbox-section">
-      <div className="lg:col-span-5 space-y-2.5">
-        {categoryList}
+    <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8" id="sandbox-section">
+      <div className="lg:col-span-7">
+        {filterBar}
+        {pillGrid}
+        {counter}
       </div>
-      <div className="lg:col-span-7 lg:sticky lg:top-6">
+      <div className="lg:col-span-5 lg:sticky lg:top-24 self-start">
         {detailPanel}
       </div>
     </div>

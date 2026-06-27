@@ -68,8 +68,8 @@ export default function ExperienceDashboard({ language }: ExperienceDashboardPro
       badgeColor: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
       location: { es: 'Lima, Perú', en: 'Lima, Peru' },
       desc: {
-        es: 'Desarrollo full stack de Plinco, plataforma de inversiones de Entel, con frontend en Next.js y backend en Django + Python. Implementé nuevos flujos de trabajo internos, construí un dashboard financiero con aprobaciones de proyectos en tiempo real y lideré una migración de Next.js que redujo los tiempos de carga 10 veces.',
-        en: 'Full stack development of Plinco, Entel\'s investment platform, with a Next.js frontend and Django + Python backend. Implemented new internal workflows, built a real-time financial dashboard for project approvals, and led a Next.js migration that reduced load times by 10x.'
+        es: 'Desarrollo full stack de la plataforma interna de inversiones de Entel, con frontend en Next.js y backend en Django + Python. Implementé nuevos flujos de trabajo internos, construí un dashboard financiero con aprobaciones de proyectos en tiempo real y lideré una migración de Next.js que redujo los tiempos de carga 10 veces.',
+        en: 'Full stack development of the internal investment platform at Entel, with a Next.js frontend and Django + Python backend. Implemented new internal workflows, built a real-time financial dashboard for project approvals, and led a Next.js migration that reduced load times by 10x.'
       },
       achievements: {
         es: [
@@ -178,7 +178,7 @@ export default function ExperienceDashboard({ language }: ExperienceDashboardPro
         return (
           <div className="relative w-full h-32 flex flex-col justify-between bg-neutral-50 dark:bg-black/40 rounded-xl overflow-hidden border border-neutral-200/50 dark:border-white/5 p-3">
             <div className="flex items-center justify-between font-mono text-[9px] tracking-wider text-neutral-400 dark:text-neutral-500">
-              <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />PLINCO_QUERY_LATENCY_TEST</span>
+              <span className="flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />INV_PLATFORM_LATENCY_TEST</span>
               <span>1.5s / OK</span>
             </div>
             <div className="space-y-2 my-auto">
